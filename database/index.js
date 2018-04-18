@@ -27,9 +27,9 @@ var User = mongoose.model('User', userSchema);
 
 var save = function(data) {
 
-var user = new User (data)
+	var user = new User (data)
 
-user.save()
+	user.save()
 }
 
 
