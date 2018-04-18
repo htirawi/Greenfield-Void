@@ -1,2 +1,10 @@
 angular.module('app')
-//comment 
+.controller('AppCtrl',function($scope,$http,$window){
+
+})
+
+.component('app', {
+	
+	//controller:'AppCtrl',
+	templateUrl: '/templates/app.html'
+})
