@@ -10,4 +10,4 @@ angular.module('app')
 	console.log(username,password)
 	}},
 	templateUrl:'/templates/signin.html'
-})
+	})
