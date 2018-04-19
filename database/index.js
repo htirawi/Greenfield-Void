@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/users');
+mongoose.connect('mongodb://localhost/Users');
 
 var db = mongoose.connection;
 
@@ -14,11 +14,12 @@ db.once('open', function() {
 
 
 var userSchema = mongoose.Schema({
-  usersName : String,
+  user    : { type:String, unique : true },
+  email   : String,
   friends : String,
-  Messages : [],
-  password : String,
-  members: [],
+  Messages: [],
+  password: String,
+  members : [],
 });
 
 var User = mongoose.model('User', userSchema);
@@ -28,9 +29,9 @@ var User = mongoose.model('User', userSchema);
 var save = function(data) {
 
 	var user = new User (data)
-
 	user.save()
 }
 
 
 module.exports.save = save
+module.exports.User = user
