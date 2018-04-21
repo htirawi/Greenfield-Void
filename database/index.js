@@ -34,4 +34,4 @@ var save = function(data) {
 
 
 module.exports.save = save
-module.exports.User = user
+module.exports.User = User
