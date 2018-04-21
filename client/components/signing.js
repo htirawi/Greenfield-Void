@@ -1,4 +1,4 @@
-	angular.module('app')
+angular.module('app')
 	.component('signing', {
 		controller : function($http){
 			{this.signin=(username,password) =>{
@@ -23,3 +23,4 @@
 	},
 	templateUrl:'/templates/signing.html'
 	})
+

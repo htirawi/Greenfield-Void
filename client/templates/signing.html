@@ -1,26 +1,41 @@
 <html>
 <head>
-<title>Sign-in</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<style >
+		button {
+				width: 100px;
+
+			},
+		input {
+				width: 100%;
+		}	
+	</style>
+	<title>Sign-in</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 </head>
 
-<body>
-	<div id="signin" ng-hide="show">
-		<input ng-model="username" placeholder="Enter your username">
-		<input ng-model="password" placeholder="Enter is your password">
-		<button ng-click='$ctrl.signin(username,password)'>Sign in</button>
-		<h2>new User?</h2> <button id="signbtn" ng-click="show = !show">Sign Up</button>
-	</div>
-	<div ng-show="show" >
-		<input ng-model="username" placeholder="Enter your username"><br></br>
-		<input ng-model="password" placeholder="Enter your password"><br></br>
-		<input ng-model="email" placeholder="Enter your email"><br></br>
-		
+<body class="text-center" >
+	<div >
+		<div  ng-hide="show" >
+			<br><br>
+			<input ng-model="username" placeholder="Enter your username">
+			<br><br>
+			<input ng-model="password" placeholder="Enter your password">
+			<br><br>
+			<button ng-click='$ctrl.signin(username,password)' class="btn btn-default">Sign in</button>
+			<h2>new User?</h2> <button ng-click="show = !show" class="btn btn-default">Sign Up</button>
+		</div>
+		<div ng-show="show" > 
+			<br><br>
+			<input ng-model="username" placeholder="Enter your username"><br></br>
+			<input ng-model="password" placeholder="Enter your password"><br></br>
+			<input ng-model="email" placeholder="Enter your email"><br></br>
 
-		<button ng-click='$ctrl.signup(username,password,email)'>Register</button><br></br>
-		<button ng-click="show=!show">Sign in</button>
-</div>
+
+			<button ng-click='$ctrl.signup(username,password,email)' class="btn btn-default">Register</button><br></br>
+			<button ng-click="show=!show" class="btn btn-default">Sign in</button>
+		</div>
+	</div>
 </body>
 
 </html>
