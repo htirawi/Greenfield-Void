@@ -6,7 +6,9 @@ angular.module('app')
 					method:'POST',
 					url:'/signin',
 					data:{username:username,password:password},
-					headers:{'Content-Type':'application/json'}
+					headers:{'Content-Type':'application/json'},
+				}).then(function onSuccess(response){
+					window.location.href = 'index1.html'
 				})
 		//console.log(username,password)
 	}}
@@ -17,10 +19,11 @@ angular.module('app')
 			url:'/signup',
 			data:{username:username,password:password,email:email},
 			headers:{'Content-Type':'application/json'}
+
 		})
 		//console.log(username,password)
 	}}
 	},
-	templateUrl:'/templates/signing.html'
+	templateUrl:'signing.html'
 	})
 

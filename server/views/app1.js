@@ -6,5 +6,5 @@ angular.module('app1')
 .component('app1', {
 	
 	//controller:'AppCtrl',
-	templateUrl: '/templates/app1.html'
+	templateUrl: 'app1.html'
 })

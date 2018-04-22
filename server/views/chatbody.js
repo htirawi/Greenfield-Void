@@ -1,7 +1,7 @@
 angular.module('app1')
-	.component('members', {
+	.component('chatbody', {
 		controller : function($http){
 		
 	},
-	templateUrl:'/templates/members.html'
+	templateUrl:'chatbody.html'
 	})
