@@ -4,17 +4,17 @@ const db = require('../../database/index.js')
 
 
 
-var isLoggedIn = function(req) {
+exports.isLoggedIn = function(req) {
   return req.session ? !!req.session.user : false;
 };
 
-exports.checkUser = function(req, res, next){
-  if (!isLoggedIn(req)) {
-    res.redirect('/signin');
-  } else {
-    next();
-  }
-};
+// exports.checkUser = function(req, res, next){
+//   if (!isLoggedIn(req)) {
+//     res.redirect('/signin');
+//   } else {
+//     next();
+//   }
+// };
 
 exports.createSession = function(req, res, newUser) {
   return req.session.regenerate(function() {

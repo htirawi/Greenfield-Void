@@ -34,8 +34,25 @@ app.use(session({
 
 app.get('/', function (req, res) {
 	res.render('index.html')
-	 //res.send('hi')
+	 
 	});
+
+
+app.get('/index1',function (req, res) {
+
+	
+	if(helper.isLoggedIn(req)){
+		res.render("index1")
+	}
+	else{
+		res.render("index")
+	}
+
+	})
+	;
+
+
+
 
 app.post('/signin', function(req,res) {
 	
@@ -58,7 +75,7 @@ app.post('/signin', function(req,res) {
 					}
 				})
 		
-		//res.send()
+		
 
 	});
 
@@ -68,16 +85,31 @@ app.post('/signup', function(req,res) {
 	var name = req.body.username
 	var password = req.body.password
 	var email = req.body.email
+
+
+	var obj = {'user':name , 'password':password,'email':email}
+
+	
+	db.User.findOne({user:name},function(err,user){
+		if (err){console.log(err)}
+			else if(name=== "" || name === null || name === undefined){
+				console.log('enter a valid name')
+				res.status(404).send('error')
+			}
+			else if(!user){helper.hash(obj)}
+				
+				else{
+					console.log('username is used')
+			}
+	 
 	
 
-	bcrypt.hash(password, 10, function(err, hash) {
-		var obj = {'user':name , 'password':hash,'email':email}
-		db.save(obj)
-
-	});
-	
+	})
 
 });
+	
+
+
 
 
 

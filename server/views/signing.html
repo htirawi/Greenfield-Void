@@ -20,19 +20,19 @@
 			<br><br>
 			<input ng-model="username" placeholder="Enter your username">
 			<br><br>
-			<input ng-model="password" placeholder="Enter your password">
+			<input ng-model="password" placeholder="Enter your password" type="password">
 			<br><br>
 			<button ng-click='$ctrl.signin(username,password)' class="btn btn-default">Sign in</button>
 			<h2>new User?</h2> <button ng-click="show = !show" class="btn btn-default">Sign Up</button>
 		</div>
 		<div ng-show="show" > 
 			<br><br>
-			<input ng-model="username" placeholder="Enter your username"><br></br>
-			<input ng-model="password" placeholder="Enter your password"><br></br>
+			<input ng-model="name" placeholder="Enter your username"><br></br>
+			<input ng-model="pass" placeholder="Enter your password" type="password"><br></br>
 			<input ng-model="email" placeholder="Enter your email"><br></br>
 
 
-			<button ng-click='$ctrl.signup(username,password,email)' class="btn btn-default">Register</button><br></br>
+			<button ng-click='$ctrl.signup(name,pass,email)' class="btn btn-default">Register</button><br></br>
 			<button ng-click="show=!show" class="btn btn-default">Sign in</button>
 		</div>
 	</div>
