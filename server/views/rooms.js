@@ -3,5 +3,5 @@ angular.module('app')
 		controller : function($http){
 	
 	},
-	templateUrl:'/templates/rooms.html'
+	templateUrl:'rooms.html'
 	})

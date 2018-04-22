@@ -4,26 +4,27 @@ const db = require('../database/index.js')
 const session = require('express-session')
 const cookieParser = require('cookie-parser');
 const helper = require('./helpers/helpers.js');
-var bcrypt = require('bcrypt');
-var Promise = require('bluebird');
-
-var path = require('path');
+const bcrypt = require('bcrypt');
+const Promise = require('bluebird');
+const path = require('path');
 
 const app = express();
 
 
 app.set('view engine', 'html');
-app.set('client',path.join(__dirname,'views'))
 app.engine('html', require('ejs').renderFile);
-app.use(bodyParser())
-app.use(express.static(path.join(__dirname,'/views')))
+app.set('client',path.join(__dirname,'views'))
 
+app.use(express.static(path.join(__dirname,'/views')))
+app.use(express.static(__dirname + '/../node_modules'));
+
+app.use(bodyParser())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 
-//app.use(express.static(__dirname + '/../views'));
-app.use(express.static(__dirname + '/../node_modules'));
+
+
 
 app.use(session({
 	secret: 'shhh, it\'s aa secret',
@@ -32,49 +33,49 @@ app.use(session({
 }));
 
 app.get('/', function (req, res) {
- res.render('index.html')
-
- 
-});
-
-
+	res.render('index.html')
+	 //res.send('hi')
+	});
 
 app.post('/signin', function(req,res) {
 	
 	var username = req.body.username;
 	var password = req.body.password;
 	console.log(username)
-	
-	db.User.findOne({user:username},function(err,user){
-		if (err){console.log(err)}
-		else if(!user){console.log('user not found')}
-			else{
-				helper.comparePassword(password,function(match){
-					if(match){
-						
-					helper.createSession(req,res,user)
-				}else{
-					res.redirect('/signin')
-				}
+		//var user = new db.User({'user':username,'password':password});
+		db.User.findOne({user:username},function(err,user){
+			if (err){console.log(err)}
+				else if(!user){console.log('user not found')}
+					else{
+						helper.comparePassword(password,function(match){
+							if(match){
+								
+								helper.createSession(req,res,user)
+							}else{
+								res.redirect('/signin')
+							}
+						})
+					}
 				})
-			}
-	})
-	
-	
+		
+		//res.send()
 
-});
+	});
 
 
 
 app.post('/signup', function(req,res) {
 	var name = req.body.username
 	var password = req.body.password
-    var email = req.body.email
-    
-	var obj = {'user':name ,'password':password,'email':email}
+	var email = req.body.email
+	
 
-	helper.hash(obj)
-	res.send()
+	bcrypt.hash(password, 10, function(err, hash) {
+		var obj = {'user':name , 'password':hash,'email':email}
+		db.save(obj)
+
+	});
+	
 
 });
 
@@ -82,6 +83,5 @@ app.post('/signup', function(req,res) {
 
 
 app.listen(3000, function() {
-  console.log('listening on port 3000!');
+	console.log('listening on port 3000!');
 });
-

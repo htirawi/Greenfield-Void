@@ -3,5 +3,5 @@ angular.module('app1')
 		controller : function($http){
 		
 	},
-	templateUrl:'/templates/chatbody.html'
+	templateUrl:'chatbody.html'
 	})
