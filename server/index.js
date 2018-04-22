@@ -34,7 +34,7 @@ app.use(session({
 
 app.get('/', function (req, res) {
 	res.render('index.html')
-	
+
 });
 
 
@@ -59,14 +59,14 @@ app.post('/signin', function(req,res) {
 	var username = req.body.username;
 	var password = req.body.password;
 	console.log(username)
-	
+
 	db.User.findOne({user:username},function(err,user){
 		if (err){console.log(err)}
 			else if(!user){console.log('user not found')}
 				else{
 					helper.comparePassword(password,function(match){
 						if(match){
-							
+
 							helper.createSession(req,res,user)
 						}else{
 							res.redirect('/signin')
@@ -74,8 +74,8 @@ app.post('/signin', function(req,res) {
 					})
 				}
 			})
-	
-	
+
+
 
 });
 
@@ -100,18 +100,16 @@ app.post('/signup', function(req,res) {
 				helper.hash(obj)
 				helper.createSession(req,res,user)
 			}
-			
+
 			else{
 				console.log('username is used')
 			}
-			
-			
+
+
 
 		})
 
 });
-
-
 
 
 
