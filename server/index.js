@@ -7,18 +7,23 @@ const helper = require('./helpers/helpers.js');
 var bcrypt = require('bcrypt');
 var Promise = require('bluebird');
 
-
-
+var path = require('path');
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }))
+
+app.set('view engine', 'html');
+app.set('client',path.join(__dirname,'views'))
+app.engine('html', require('ejs').renderFile);
+app.use(bodyParser())
+app.use(express.static(path.join(__dirname,'/views')))
+
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 
-app.use(express.static(__dirname + '/../client'));
+//app.use(express.static(__dirname + '/../views'));
 app.use(express.static(__dirname + '/../node_modules'));
-
 
 app.use(session({
 	secret: 'shhh, it\'s aa secret',
