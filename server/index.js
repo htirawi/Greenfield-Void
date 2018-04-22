@@ -34,8 +34,8 @@ app.use(session({
 
 app.get('/', function (req, res) {
 	res.render('index.html')
-	 
-	});
+	
+});
 
 
 app.get('/index1',function (req, res) {
@@ -48,8 +48,8 @@ app.get('/index1',function (req, res) {
 		res.render("index")
 	}
 
-	})
-	;
+})
+;
 
 
 
@@ -59,25 +59,25 @@ app.post('/signin', function(req,res) {
 	var username = req.body.username;
 	var password = req.body.password;
 	console.log(username)
-		//var user = new db.User({'user':username,'password':password});
-		db.User.findOne({user:username},function(err,user){
-			if (err){console.log(err)}
-				else if(!user){console.log('user not found')}
-					else{
-						helper.comparePassword(password,function(match){
-							if(match){
-								
-								helper.createSession(req,res,user)
-							}else{
-								res.redirect('/signin')
-							}
-						})
-					}
-				})
-		
-		
+	
+	db.User.findOne({user:username},function(err,user){
+		if (err){console.log(err)}
+			else if(!user){console.log('user not found')}
+				else{
+					helper.comparePassword(password,function(match){
+						if(match){
+							
+							helper.createSession(req,res,user)
+						}else{
+							res.redirect('/signin')
+						}
+					})
+				}
+			})
+	
+	
 
-	});
+});
 
 
 
@@ -96,18 +96,21 @@ app.post('/signup', function(req,res) {
 				console.log('enter a valid name')
 				res.status(404).send('error')
 			}
-			else if(!user){helper.hash(obj)}
-				
-				else{
-					console.log('username is used')
+			else if(!user){
+				helper.hash(obj)
+				helper.createSession(req,res,user)
 			}
-	 
-	
+			
+			else{
+				console.log('username is used')
+			}
+			
+			
 
-	})
+		})
 
 });
-	
+
 
 
 
