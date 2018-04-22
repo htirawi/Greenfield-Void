@@ -1,0 +1,17 @@
+<html>
+<head>
+<title>Sign-in</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+	<div id="signin" ng-hide="show">
+		<input ng-model="username" placeholder="Enter your username">
+		<input ng-model="password" placeholder="Enter is your password">
+		<button ng-click='$ctrl.signin(username,password)'>Sign in</button>
+		<h2>new User?</h2> <button id="signbtn" ng-click="show = !show">Sign Up</button>
+	</div>
+	</body>
+
+</html>
