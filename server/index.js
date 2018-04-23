@@ -7,6 +7,7 @@ const helper = require('./helpers/helpers.js');
 const bcrypt = require('bcrypt');
 const Promise = require('bluebird');
 const path = require('path');
+const logout = require('express-passport-logout');
 
 const app = express();
 
@@ -94,8 +95,8 @@ app.post('/signup', function(req,res) {
 		if (err){console.log(err)}
 			else if(name=== "" || name === null || name === undefined){
 				console.log('enter a valid name')
-				res.status(404).send('error')
-			}
+				//res.status(404).send('error')
+				 res.status(500).send('error')}
 			else if(!user){
 				helper.hash(obj)
 				helper.createSession(req,res,user)
@@ -108,6 +109,20 @@ app.post('/signup', function(req,res) {
 
 
 		})
+
+});
+
+
+app.get('/logout', function(req, res) {
+	console.log('here')
+  // req.session.destroy(function() {
+  //   res.redirect('/');
+  //  // req.render('index')
+  // });
+   //req.logout();
+   req.logout();
+    req.session.destroy();
+    res.redirect("/");
 
 });
 

@@ -6,11 +6,10 @@ angular.module('app')
 				method:'POST',
 				url:'/signin',
 				data:{username:username,password:password},
-				headers:{'Content-Type':'application/json'},
+				headers:{'Content-Type':'application/json'}
 			}).then(function onSuccess(response){
 				window.location.href = 'index1.html'
 			})
-			
 			
 		}}
 
@@ -19,8 +18,10 @@ angular.module('app')
 				method:'POST',
 				url:'/signup',
 				data:{username:name,password:pass,email:email},
-				headers:{'Content-Type':'application/json'}
-
+				headers:{'Content-Type':'application/json'},
+				error: function(error){
+         			 if(error.responseText == 'showAlert')
+             		 alert("Please enter correct user name and password.")}
 
 			}).then(function onSuccess(response){
 				window.location.href = 'index1.html'
