@@ -16,16 +16,29 @@
     user    : { type:String, unique : true },
     email   : String,
     friends : String,
-    Messages: [],
+    messages: [],
     password: String,
-    members : [],
+    
+  });
+
+
+  var roomSchema = mongoose.Schema({
+   rooms : { type:String , unique:true},
+   members: [],
+   Messages : [],
   });
 
   var User = mongoose.model('User', userSchema);
 
+  var Room = mongoose.model('Room', userSchema);
 
 
-  
+
+  var saveRoom = function(data) {
+
+    var room = new Room (data)
+    room.save()
+  }
 
 
   var save = function(data) {
@@ -36,4 +49,6 @@
 
 
 module.exports.save = save
+module.exports.saveRoom = saveRoom
 module.exports.User = User
+module.exports.Room = Room
