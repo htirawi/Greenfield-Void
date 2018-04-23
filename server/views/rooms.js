@@ -10,6 +10,7 @@ angular.module('app1')
 		}}
 
 			
+			
 	},
 
 	templateUrl:'rooms.html'

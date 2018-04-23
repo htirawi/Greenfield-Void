@@ -9,7 +9,11 @@ angular.module('app')
 				headers:{'Content-Type':'application/json'}
 			}).then(function onSuccess(response){
 				window.location.href = 'index1.html'
+			}).catch(function(response) {
+				var x = (response.data)
+				alert(x,response.status);
 			})
+			
 			
 		}}
 
@@ -18,17 +22,15 @@ angular.module('app')
 				method:'POST',
 				url:'/signup',
 				data:{username:name,password:pass,email:email},
-				headers:{'Content-Type':'application/json'},
-				error: function(error){
-         			 if(error.responseText == 'showAlert')
-             		 alert("Please enter correct user name and password.")}
-
+				headers:{'Content-Type':'application/json'}
 			}).then(function onSuccess(response){
 				window.location.href = 'index1.html'
+			}).catch(function(response) {
+				var x = (response.data)
+				alert(x,response.status);
 			})
 			
 		}}
 	},
 	templateUrl:'signing.html'
 })
-

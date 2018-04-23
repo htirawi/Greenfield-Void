@@ -7,7 +7,6 @@ const helper = require('./helpers/helpers.js');
 const bcrypt = require('bcrypt');
 const Promise = require('bluebird');
 const path = require('path');
-const logout = require('express-passport-logout');
 
 const app = express();
 
@@ -30,7 +29,8 @@ app.use(bodyParser.json())
 app.use(session({
 	secret: 'shhh, it\'s aa secret',
 	resave : false,
-	saveUninitialized:true
+	saveUninitialized:true,
+	unset: 'destroy'
 }));
 
 app.get('/', function (req, res) {
@@ -59,18 +59,18 @@ app.post('/signin', function(req,res) {
 	
 	var username = req.body.username;
 	var password = req.body.password;
-	console.log(username)
 
 	db.User.findOne({user:username},function(err,user){
 		if (err){console.log(err)}
-			else if(!user){console.log('user not found')}
+			else if(!user){res.status(404).send('user is not found')}
 				else{
-					helper.comparePassword(password,function(match){
+					helper.comparePassword(password,user,function(error,match){
 						if(match){
-
+							console.log('yes')
 							helper.createSession(req,res,user)
 						}else{
-							res.redirect('/signin')
+							console.log(match)
+							res.status(404).send('wrong password')
 						}
 					})
 				}
@@ -94,16 +94,17 @@ app.post('/signup', function(req,res) {
 	db.User.findOne({user:name},function(err,user){
 		if (err){console.log(err)}
 			else if(name=== "" || name === null || name === undefined){
-				console.log('enter a valid name')
-				//res.status(404).send('error')
-				 res.status(500).send('error')}
+				res.status(404).send('enter a valid name')	
+			}
 			else if(!user){
 				helper.hash(obj)
+
 				helper.createSession(req,res,user)
+				
 			}
 
 			else{
-				console.log('username is used')
+				res.status(404).send('username is used')
 			}
 
 
@@ -113,18 +114,15 @@ app.post('/signup', function(req,res) {
 });
 
 
-app.get('/logout', function(req, res) {
-	console.log('here')
-  // req.session.destroy(function() {
-  //   res.redirect('/');
-  //  // req.render('index')
-  // });
-   //req.logout();
-   req.logout();
-    req.session.destroy();
-    res.redirect("/");
 
-});
+
+app.get('/logout', function(req, res) {
+	req.session.destroy(function() {
+		res.redirect('/');
+	});
+})
+
+
 
 
 
