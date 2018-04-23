@@ -59,18 +59,18 @@ app.post('/signin', function(req,res) {
 	
 	var username = req.body.username;
 	var password = req.body.password;
-	console.log(username)
 
 	db.User.findOne({user:username},function(err,user){
 		if (err){console.log(err)}
 			else if(!user){res.status(404).send('user is not found')}
 				else{
-					helper.comparePassword(password,function(match){
+					helper.comparePassword(password,user,function(error,match){
 						if(match){
-
+							console.log('yes')
 							helper.createSession(req,res,user)
 						}else{
-							res.redirect('/signin')
+							console.log(match)
+							res.status(404).send('wrong password')
 						}
 					})
 				}
@@ -98,6 +98,7 @@ app.post('/signup', function(req,res) {
 			}
 			else if(!user){
 				helper.hash(obj)
+
 				helper.createSession(req,res,user)
 				
 			}
