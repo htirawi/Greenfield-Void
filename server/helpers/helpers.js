@@ -25,18 +25,28 @@ exports.createSession = function(req, res, newUser) {
 };
 
 
-exports.comparePassword = function(candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-    if (err) return cb(err);
-    cb(null, isMatch);
-  })};
+exports.comparePassword = function(password,user, cb) {
+//console.log(user.password)
 
+ bcrypt.compare(password, user.password, function(err, isMatch) {
+  console.log(user.password,password)
+        if (err) return 'error';
+        cb(null, isMatch);
+    });
+
+  }
+
+
+
+
+  
 
 
   exports.hash = function(obj){
     bcrypt.hash(obj.password, 10, function(err, hash) {
       obj.password=hash
       db.save(obj)
+    // return obj
 
     })}
 
