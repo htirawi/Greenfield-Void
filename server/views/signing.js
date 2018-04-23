@@ -6,9 +6,12 @@ angular.module('app')
 				method:'POST',
 				url:'/signin',
 				data:{username:username,password:password},
-				headers:{'Content-Type':'application/json'},
+				headers:{'Content-Type':'application/json'}
 			}).then(function onSuccess(response){
 				window.location.href = 'index1.html'
+			}).catch(function(response) {
+				var x = (response.data)
+				alert(x,response.status);
 			})
 			
 			
@@ -20,10 +23,11 @@ angular.module('app')
 				url:'/signup',
 				data:{username:name,password:pass,email:email},
 				headers:{'Content-Type':'application/json'}
-
-
 			}).then(function onSuccess(response){
 				window.location.href = 'index1.html'
+			}).catch(function(response) {
+				var x = (response.data)
+				alert(x,response.status);
 			})
 			
 		}}

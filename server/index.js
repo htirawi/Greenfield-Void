@@ -29,7 +29,8 @@ app.use(bodyParser.json())
 app.use(session({
 	secret: 'shhh, it\'s aa secret',
 	resave : false,
-	saveUninitialized:true
+	saveUninitialized:true,
+	unset: 'destroy'
 }));
 
 app.get('/', function (req, res) {
@@ -62,7 +63,7 @@ app.post('/signin', function(req,res) {
 
 	db.User.findOne({user:username},function(err,user){
 		if (err){console.log(err)}
-			else if(!user){console.log('user not found')}
+			else if(!user){res.status(404).send('user is not found')}
 				else{
 					helper.comparePassword(password,function(match){
 						if(match){
@@ -93,16 +94,16 @@ app.post('/signup', function(req,res) {
 	db.User.findOne({user:name},function(err,user){
 		if (err){console.log(err)}
 			else if(name=== "" || name === null || name === undefined){
-				console.log('enter a valid name')
-				res.status(404).send('error')
+				res.status(404).send('enter a valid name')	
 			}
 			else if(!user){
 				helper.hash(obj)
 				helper.createSession(req,res,user)
+				
 			}
 
 			else{
-				console.log('username is used')
+				res.status(404).send('username is used')
 			}
 
 
@@ -110,6 +111,17 @@ app.post('/signup', function(req,res) {
 		})
 
 });
+
+
+
+
+app.get('/logout', function(req, res) {
+	req.session.destroy(function() {
+		res.redirect('/');
+	});
+})
+
+
 
 
 
