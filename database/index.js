@@ -15,35 +15,36 @@
   var userSchema = mongoose.Schema({
     user    : { type:String, unique : true },
     email   : String,
-    friends : String,
-    messages: [],
+    friends : [String],
+    messages: [String],
     password: String,
+    online: Boolean,
     
   });
 
 
   var roomSchema = mongoose.Schema({
-   rooms : { type:String , unique:true},
+   roomname : { type:String , unique:true},
    members: [],
-   Messages : [],
+   Messages : [{username:String, message:String}],
   });
 
   var User = mongoose.model('User', userSchema);
 
-  var Room = mongoose.model('Room', userSchema);
+  var Room = mongoose.model('Room', roomSchema);
 
 
 
   var saveRoom = function(data) {
 
-    var room = new Room (data)
+    var room = new Room(data)
     room.save()
   }
 
 
   var save = function(data) {
 
-  	var user = new User (data)
+  	var user = new User(data)
   	user.save()
   }
 

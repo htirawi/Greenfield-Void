@@ -1,7 +1,14 @@
-<div style="height: 550px; border-color: cyan;border-bottom: solid;border-left: solid;border-right: solid; border-color: cyan">
+<div style="height: 550px; border-color: cyan;border-bottom: solid;border-left: solid;border-right: solid; border-color: cyan" users=$scope.users>
 	<h1 class="text-center"  style="color: white ;background-color:#00a3cc " >Members</h1>
-	<button class="btn-block btn btn-info" ><b style="color: black"> Online Members </b></button>
-	<div >
-		<li> <button class="btn-block">Members</button></li>
+	<button ng-click="$ctrl.showmembers()" class="btn-block btn btn-info" ><b style="color: black"> Online Members </b></button>
+	<div ng-repeat = "user in users">
+		<li> <button ng-value="user" class="btn-block">{{user.user}}</button></li>
+	</div>
+	<br></br>
+	<br></br>
+	<button class="btn-block btn btn-info" ng-click="switch = !switch">add Friend</button>
+	<div  ng-show="switch" >
+		<input ng-model="name" placeholder="Enter friend name" class="width:100%">
+		<button ng-click='$ctrl.addfriend(name)' class="btn-block btn btn-info">add</button>
 	</div>
 </div>
