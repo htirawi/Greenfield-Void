@@ -1,7 +1,40 @@
 angular.module('app1')
 	.component('members', {
-		controller : function($http){
-		
+		controller : function($scope,$http,$window){
+		$http({
+			method : "GET",
+			url : "/showmembers"
+		}).then(function Success(response) {
+			$scope.users = response.data;
+			console.log(response.data)
+			
+		});
+
+		this.showmembers=() =>{
+			$http({
+			method : "GET",
+			url : "/showmembers"
+		}).then(function onSuccess(response){
+				setTimeout(function(){ 
+					$window.location.reload();
+				}, 200);
+			}).catch(function(response) {
+				var x = (response.data)
+				alert(x,response.status);
+			})
+			
+		}
+
+		this.addfriend = (name) =>{
+						$http({
+				method:'POST',
+				url:'/addfriend',
+				data:{name:name},
+				headers:{'Content-Type':'application/json'}
+			})
+			
+		}
+
 	},
 	templateUrl:'members.html'
 	})
