@@ -53,6 +53,14 @@ app.get('/index1',function (req, res) {
 })
 ;
 
+app.get('/messages',function(req, res){
+db.Room.findOne({roomname:'Public'}, function(err,data){
+	res.send(data)
+		})
+
+})
+
+
 app.post('/createroom', function(req,res) {
 	var name = req.body.roomname
 	db.saveRoom({'roomname':name})
@@ -139,8 +147,9 @@ app.post('/signin', function(req,res) {
 								helper.createSession(req,res,user)
 
 								db.Room.findOne({roomname:'Public'},function(err,room){
+								if(room.members.indexOf(username) === -1){	
 								room.members.push(username)
-								db.saveRoom(room)
+								db.saveRoom(room)}
 
 							})})
 						} else{
@@ -223,9 +232,18 @@ io.on('connection',function(socket){
 socket.on('new_msg',function(data){
 	
 		//we user sockets because we need to send message to all connected sockets.
-		io.sockets.emit('new_msg',data);
-	})
 
+		io.sockets.emit('new_msg',data);
+		var user = data.username
+		var room =  'Public' 
+		var message = data.msg
+		db.Room.findOne({roomname:room},function(err,room1){
+			
+				room1.messages.push({'username':user, 'message':message})
+				db.saveRoom(room1)
+			
+	})
+})
 //typing listener
 socket.on('typing',function(data){
 	socket.broadcast.emit('typing', {username:socket.username})
