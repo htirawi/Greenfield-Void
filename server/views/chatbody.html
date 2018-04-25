@@ -1,18 +1,15 @@
 
 <h1 class="text-center "  style="color: white; border-bottom: solid; border-color: cyan ;background-color: #00a3cc"  >Chat</h1>
-<div style="border-style: solid;height: 1050px; border-color: cyan" class="Test" id="chatroom">
-	
-
-<!-- 	<div>
-		<li style="border-bottom: solid; color: white ; border-color: cyan " > 
-
-			Username: {{name}} <br>
-			Message :{{message}}
-
-		</li>
+<div style="border-style: solid;height: 1050px; border-color: cyan" class="Test" id="chatroom" messages=$scope.messages>
+<div ng-repeat="message in messages"> 
+	<!-- {{message.username}} <br>
+	{{message.message}} -->
+	<p class='msg'>  <b> {{message.username}}  </b>  :   {{message.message}}  </p>
 
 
-	</div> -->
+	</div>
+
+
 	
 </div>
 

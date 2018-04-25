@@ -4,6 +4,20 @@ angular.module('app1')
 		var socket = io.connect()
 		var chatroom = $("#chatroom")
 		
+		$http({
+        method : "GET",
+        url : "/messages"
+    }).then(function Success(response) {
+
+
+    	
+        $scope.messages = response.data.messages;
+        console.log(response.data.messages)
+        
+        
+    });
+
+		
 
 
 		this.send_msg=() =>{
