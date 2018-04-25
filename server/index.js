@@ -101,8 +101,11 @@ app.post('/addfriend', function(req,res) {
 	
 	var name = req.body.name
 	db.User.findOne({user:name},function(err,user){
-		if ( user === null || user === name) {
+		if ( user === null  ) {
 			res.status(404).send('user is not found')
+		}else if(req.session.user.user === name){
+			res.status(404).send("you can't add your self")
+
 		}else {
 		var x = req.session.user.user
 		db.User.findOne({user:x},function(err,user1){
@@ -131,11 +134,16 @@ app.post('/signin', function(req,res) {
 							db.User.findOne({user:username},function(err,user){
 								user.online=true
 								db.save(user)
+
 							}).then(function(){
 								helper.createSession(req,res,user)
 
-							})
-						}else{
+								db.Room.findOne({roomname:'Public'},function(err,room){
+								room.members.push(username)
+								db.saveRoom(room)
+
+							})})
+						} else{
 							console.log(match)
 							res.status(404).send('wrong password')
 						}
@@ -158,6 +166,7 @@ app.post('/signup', function(req,res) {
 			}
 			else if(!user){
 				helper.hash(obj)
+				res.send('you can sign in now')
 			}
 			else{
 				res.status(404).send('username is used')
@@ -175,7 +184,7 @@ app.get('/logout', function(req, res) {
 	}).then(function(){
 		req.session.destroy(function() {
 			res.redirect('/');
-		});
+		})
 
 	})
 
