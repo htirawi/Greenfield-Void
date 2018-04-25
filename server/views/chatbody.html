@@ -17,6 +17,6 @@
 </div>
 
 <div>
-	<input type="text" style="width: 100%; height: 50px" id="msg" ng-model="msg"> 
+	<input type="text" style="width: 100%; height: 50px" id="msg" ng-model="msg" ng-keyup="$event.keyCode ==13?$ctrl.send_msg(msg) : null"> 
 	<button class="btn btn-block btn-info" id="send_msg" ng-click="$ctrl.send_msg(msg)">Send</button>
 </div>
