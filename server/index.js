@@ -31,10 +31,10 @@ app.use(session({
 	
 }));
 
-// app.get('/', function (req, res) {
-// 	res.render('index.html')
+app.get('/', function (req, res) {
+	res.render('index.html')
 
-// });
+});
 
 app.get('/video', function (req, res) {
 	res.render('video.html')
@@ -92,7 +92,7 @@ app.get('/getusername', function(req,res) {
 	var x = req.session.user.user
 	db.User.findOne({user:x},function(err,user){
 		res.send(user.user)
-		// console.log(user.friends)
+		
 	})
 });
 
@@ -101,14 +101,16 @@ app.post('/addfriend', function(req,res) {
 	
 	var name = req.body.name
 	db.User.findOne({user:name},function(err,user){
+		if ( user === null || user === name) {
+			res.status(404).send('user is not found')
+		}else {
 		var x = req.session.user.user
-		// console.log(name,x)
 		db.User.findOne({user:x},function(err,user1){
 			if(user1.friends.indexOf(name) === -1){
 				user1.friends.push(name)
 				db.save(user1)
 			}
-		})
+		})}
 
 	})
 	
@@ -201,21 +203,16 @@ io.on('connection',function(socket){
 	// var x = req.session.user.user
 
 	// console.log(socket.username)
-	console.log("New User Connected");
+
 
 	//get default user name
 	socket.username = "Someone...";
 
 //listen to change username
-// socket.on('change_username',function(data){
-// 		// console.log(data)
-// 		// console.log(socket.username)
-// 		socket.username = data.username;
-// 	})
 
 //listen to new msg
 socket.on('new_msg',function(data){
-	console.log(data)
+	
 		//we user sockets because we need to send message to all connected sockets.
 		io.sockets.emit('new_msg',data);
 	})

@@ -2,20 +2,26 @@ angular.module('app')
 .component('signing', {
 	controller : function($http){
 		{this.signin=(username,password) =>{
-			$http({
-				method:'POST',
-				url:'/signin',
-				data:{username:username,password:password},
-				headers:{'Content-Type':'application/json'}
-			}).then(function onSuccess(response){
-				window.location.href = 'index1.html'
-			}).catch(function(response) {
-				var x = (response.data)
-				alert(x,response.status);
-			})
-			
-			
-		}}
+			if ( username === undefined || password === undefined) {
+
+				alert('enter a valid name or password')
+
+			}else {
+				$http({
+					method:'POST',
+					url:'/signin',
+					data:{username:username,password:password},
+					headers:{'Content-Type':'application/json'}
+				}).then(function onSuccess(response){
+					window.location.href = 'index1.html'
+				}).catch(function(response) {
+					var x = (response.data)
+					alert(x,response.status);
+				})
+				
+				
+			}}
+		}
 
 		{this.signup=(name,pass,email) =>{
 			$http({

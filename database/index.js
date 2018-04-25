@@ -8,6 +8,7 @@
 
   db.once('open', function() {
     console.log('mongoose connected successfully');
+    saveRoom({'roomname':'Public' })
   });
 
 
@@ -25,7 +26,7 @@
 
   var roomSchema = mongoose.Schema({
    roomname : { type:String , unique:true},
-   members: [],
+   members: [String],
    Messages : [{username:String, message:String}],
   });
 
