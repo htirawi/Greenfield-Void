@@ -66,7 +66,8 @@ app.post('/signin', function(req,res) {
 				else{
 					helper.comparePassword(password,user,function(error,match){
 						if(match){
-							console.log('yes')
+							//console.log(user)
+							user.onLine = true ;
 							helper.createSession(req,res,user)
 						}else{
 							console.log(match)
@@ -88,7 +89,7 @@ app.post('/signup', function(req,res) {
 	var email = req.body.email
 
 
-	var obj = {'user':name , 'password':password,'email':email}
+	var obj = {'user':name , 'password':password,'email':email,'onLine':true}
 
 	
 	db.User.findOne({user:name},function(err,user){
@@ -116,7 +117,7 @@ app.post('/signup', function(req,res) {
 
 
 
-app.get('/logout', function(req, res) {
+app.post('/logout', function(req, res) {
 	req.session.destroy(function() {
 		res.redirect('/');
 	});

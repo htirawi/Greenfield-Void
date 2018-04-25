@@ -18,6 +18,7 @@
     friends : String,
     messages: [],
     password: String,
+    onLine: Boolean,
     
   });
 

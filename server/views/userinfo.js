@@ -3,7 +3,7 @@ angular.module('app1')
 		controller : function($http){
 			this.logout=() => {
 			$http({
-			method:'GET',
+			method:'POST',
 			url:'/logout'
 			
 		}).then(function onSuccess(response){
