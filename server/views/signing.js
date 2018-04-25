@@ -30,7 +30,8 @@ angular.module('app')
 				data:{username:name,password:pass,email:email},
 				headers:{'Content-Type':'application/json'}
 			}).then(function onSuccess(response){
-				window.location.href = 'index1.html'
+				var x = (response.data)
+				alert(x,response.status);
 			}).catch(function(response) {
 				var x = (response.data)
 				alert(x,response.status);

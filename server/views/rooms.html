@@ -5,8 +5,8 @@
 		<input ng-model="name" placeholder="Enter the room name" class="width:100%">
 		<button ng-click='$ctrl.createroom(name)' class="btn-block btn btn-info">Submit</button>
 	</div>
-	<li> <button class="btn-block">Public Room</button></li>
-	<div ng-repeat="room in rooms"> 
+<!-- 	<li> <button class="btn-block">Public Room</button></li>
+ -->	<div ng-repeat="room in rooms"> 
 		<li> <button class="btn-block">{{room.roomname}}</button></li>
 	</div>
 </div>
