@@ -25,15 +25,7 @@ angular.module('app1')
 			
 		}
 
-		this.addfriend = (name) =>{
-						$http({
-				method:'POST',
-				url:'/addfriend',
-				data:{name:name},
-				headers:{'Content-Type':'application/json'}
-			})
-			
-		}
+		
 
 	},
 	templateUrl:'members.html'
