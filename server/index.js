@@ -35,6 +35,11 @@ app.get('/', function (req, res) {
 
 });
 
+app.get('/video', function (req, res) {
+	res.render('video.html')
+
+});
+
 
 app.get('/index1',function (req, res) {
 	if(helper.isLoggedIn(req)){
