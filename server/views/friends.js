@@ -8,23 +8,19 @@ angular.module('app')
 			$scope.friends = response.data;
 			console.log(response.data)
 			
-		}
-		// ,
-		// 	function (){
-		// 		setTimeout(function(){ 
-		// 			$window.location.reload();
-		// 		}, 200)}
+		})
+	
 
-		);
+		
 
 		this.showfriends=() =>{
 			$http({
 				method : "GET",
 				url : "/showfriends"
 			}).then(function onSuccess(response){
-				setTimeout(function(){ 
-					$window.location.reload();
-				}, 200);
+				
+				$window.location.reload();
+				
 			}).catch(function(response) {
 				var x = (response.data)
 				alert(x,response.status);
@@ -37,6 +33,9 @@ angular.module('app')
 				url:'/addfriend',
 				data:{name:name},
 				headers:{'Content-Type':'application/json'}
+			}).catch(function(response) {
+				var x = (response.data)
+				alert(x,response.status);
 			})
 			
 		}
