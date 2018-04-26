@@ -5,6 +5,17 @@
 		<input ng-model="name" placeholder="Enter the room name" class="width:100%">
 		<button ng-click='$ctrl.createroom(name)' class="btn-block btn btn-info">Submit</button>
 	</div>
+
+<button  ng-click="show = !show" class="btn-block btn btn-info"  ><b style="color: black"> Join room </b></button>
+	<div  ng-show="show" >
+		<input ng-model="rname" placeholder="Enter the room name" class="width:100%">
+		<button ng-click='$ctrl.joinroom(rname)' class="btn-block btn btn-info">Submit</button>
+	</div>
+
+
+
+
+
 <!-- 	<li> <button class="btn-block">Public Room</button></li>
  -->	<div ng-repeat="room in rooms"> 
 		<li> <button class="btn-block">{{room.roomname}}</button></li>

@@ -11,6 +11,10 @@ angular.module('app1')
 		});
 
 		this.createroom=(name) =>{
+			if(name === 'Public'){
+				alert("you can't create the Public room")
+			}
+			else{
 			$http({
 				method:'POST',
 				url:'/createroom',
@@ -21,6 +25,25 @@ angular.module('app1')
 					$window.location.reload();
 				}, 200);
 			}).catch(function(response) {
+				var x = (response.data)
+				alert(x,response.status);
+			})
+			}
+		}
+
+		this.joinroom=(rname) =>{
+			
+			$http({
+				method:'POST',
+				url:'/joinroom',
+				data:{roomname:rname},
+				headers:{'Content-Type':'application/json'}
+			}).then(function(){
+					$('#chatroom').html('')
+					$window.location.reload();
+				}
+				
+			).catch(function(response) {
 				var x = (response.data)
 				alert(x,response.status);
 			})

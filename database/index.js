@@ -20,6 +20,7 @@
     messages: [String],
     password: String,
     online: Boolean,
+    currentRoom:String
     
   });
 
