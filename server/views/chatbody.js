@@ -34,7 +34,8 @@ angular.module('app1')
 					method:'GET',
 					url:'/getusername',
 				}).then(function (response){
-					socket.emit('new_msg',{msg:msg,username:response.data})
+					//console.log('r',response.data.currentRoomresponse.data.currentRoom)
+					socket.emit('new_msg',{msg:msg,username:response.data.user,room:response.data.currentRoom})
 
 
 				})
