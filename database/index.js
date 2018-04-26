@@ -29,7 +29,7 @@
    roomname : { type:String , unique:true},
    members: [String],
    messages : [{username:String, message:String}],
-  });
+ });
 
   var User = mongoose.model('User', userSchema);
 
@@ -51,7 +51,7 @@
   }
 
 
-module.exports.save = save
-module.exports.saveRoom = saveRoom
-module.exports.User = User
-module.exports.Room = Room
+  module.exports.save = save
+  module.exports.saveRoom = saveRoom
+  module.exports.User = User
+  module.exports.Room = Room
