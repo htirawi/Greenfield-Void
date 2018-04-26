@@ -245,11 +245,6 @@ app.get('/logout', function(req, res) {
 
 //for deployment
 
-var port = process.env.PORT || 3000;
-
-const server = app
-.use((req, res) => res.render('index') )
-.listen(port, () => console.log(`Listening on ${ port }`));
 
 //Listen on port 3000
 // server = app.listen(3000)
@@ -297,3 +292,6 @@ socket.on('typing',function(data){
 // app.listen(3000, function() {
 // 	console.log('listening on port 3000!');
 // });
+var port = process.env.PORT || 3000;
+
+app.listen(port, () => console.log(`Listening on ${ port }`));
