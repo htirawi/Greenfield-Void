@@ -13,5 +13,11 @@
 		<li> <button  class="btn-block">{{friend}}</button></li>
 	
 	</div>
+
+	<button class="btn-block btn btn-info" ng-click="show = !show">Start a private conversation</button>
+	<div  ng-show="show" >
+		<input ng-model="fname" placeholder="Enter friend name" class="width:100%">
+		<button ng-click='$ctrl.talktofriend(fname)' class="btn-block btn btn-info">start</button>
+	</div>
 	
 </div>

@@ -5,17 +5,17 @@ angular.module('app1')
 		var chatroom = $("#chatroom")
 		
 		$http({
-        method : "GET",
-        url : "/messages"
-    }).then(function Success(response) {
+			method : "GET",
+			url : "/messages"
+		}).then(function Success(response) {
 
 
-    	
-        $scope.messages = response.data.messages;
-        console.log(response.data.messages)
-        
-        
-    });
+			
+			$scope.messages = response.data.messages;
+			console.log(response.data.messages)
+			
+			
+		});
 
 		
 
@@ -35,6 +35,7 @@ angular.module('app1')
 					url:'/getusername',
 				}).then(function (response){
 					//console.log('r',response.data.currentRoomresponse.data.currentRoom)
+					$scope.currentRoom=response.data.currentRoom
 					socket.emit('new_msg',{msg:msg,username:response.data.user,room:response.data.currentRoom})
 
 
@@ -43,11 +44,17 @@ angular.module('app1')
 			
 		}
 		socket.on('new_msg',function(data){
+			console.log($scope.currentRoom)
+			if($scope.currentRoom === data.room)
+				
+			{
+				document.getElementById("msg").value = "";
+				chatroom.append("<p class='msg'>" + "<b>" + data.username + "</b>" + ": " + data.msg + " </p>")
+				data.msg=''
+
+			}
 			
 			
-			document.getElementById("msg").value = "";
-			chatroom.append("<p class='msg'>" + "<b>" + data.username + "</b>" + ": " + data.msg + " </p>")
-			data.msg=''
 
 		})
 		
