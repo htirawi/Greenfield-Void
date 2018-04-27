@@ -43,11 +43,8 @@ angular.module('app1')
 					$window.location.reload();
 				}
 				
-			).catch(function(response) {
-				var x = (response.data)
-				alert(x,response.status);
-			})
-			
+			)
+			$window.location.reload();
 		}
 
 	},
