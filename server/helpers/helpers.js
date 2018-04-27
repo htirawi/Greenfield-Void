@@ -13,6 +13,8 @@ exports.isLoggedIn = function(req) {
 exports.createSession = function(req, res, newUser) {
   return req.session.regenerate(function() {
     req.session.user = newUser;
+    //req.session.room='Public';
+    //console.log(req.session)
     res.redirect('/');
     
   });
@@ -43,31 +45,31 @@ exports.comparePassword = function(password,user, cb) {
     })}
 
 
-    exports.retrieve = function(req,res){
-      db.User.find({},function(err,data){
-        res.send(data)
-      })
-    }
+    // exports.retrieve = function(req,res){
+    //   db.User.find({},function(err,data){
+    //     res.send(data)
+    //   })
+    // }
 
 
-    exports.retrieveOne = function(req,res){
+    // exports.retrieveOne = function(req,res){
 
-    }
+    // }
 
-    exports.updateOne = function(req,res){
+    // exports.updateOne = function(req,res){
 
-    }
+    // }
 
-    exports.delete = function(req,res){
-      exports.retrieve(req,res);
-      db.User.remove({},function(err,data){
-        if (err) console.log(err)
-      })
-    }
+    // exports.delete = function(req,res){
+    //   exports.retrieve(req,res);
+    //   db.User.remove({},function(err,data){
+    //     if (err) console.log(err)
+    //   })
+    // }
 
-    exports.deleteOne = function(req,res){
+    // exports.deleteOne = function(req,res){
 
-    }
+    // }
 
 
 

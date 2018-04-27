@@ -23,6 +23,7 @@ app.use(bodyParser())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
+var curRoom= 'Public'
 
 app.use(session({
 	secret: 'shhh, it\'s aa secret',
@@ -54,7 +55,9 @@ app.get('/index1',function (req, res) {
 ;
 
 app.get('/messages',function(req, res){
-db.Room.findOne({roomname:'Public'}, function(err,data){
+	//var user = req.session.user.user
+	console.log(curRoom)
+db.Room.findOne({roomname:curRoom}, function(err,data){
 	res.send(data)
 		})
 
@@ -74,6 +77,37 @@ app.get('/createroom', function(req,res) {
 	})
 	
 });
+
+app.post('/joinroom', function(req,res) {
+
+	var name = req.body.roomname
+	console.log(name)
+	
+	db.Room.findOne({roomname:name},function(err,room){
+		if ( room === null  ) {
+			res.status(404).send('room is not found')}
+		else {
+		var x = req.session.user.user
+			if(room.members.indexOf(x) === -1){
+				room.members.push(x)
+				db.saveRoom(room)
+			}
+		}
+
+	})
+
+	db.User.findOne({user:req.session.user.user},function(err,user){
+			user.currentRoom=req.body.roomname
+			db.save(user)
+		})
+curRoom=name
+// req.session.user.currentRoom=name
+
+})
+	
+		
+	
+
 
 
 app.get('/showmembers', function(req,res) {
@@ -98,9 +132,15 @@ app.get('/showfriends', function(req,res) {
 });
 
 app.get('/getusername', function(req,res) {
+	//console.log(session)
 	var x = req.session.user.user
+	//var y = req.session.room
+	//console.log(y)
 	db.User.findOne({user:x},function(err,user){
-		res.send(user.user)
+		console.log(user)
+		//var data = {user:user,room:currentRoom}
+		//console.log(data)
+		res.send(user)
 		
 	})
 });
@@ -162,6 +202,7 @@ app.post('/signin', function(req,res) {
 						if(match){
 							db.User.findOne({user:username},function(err,user){
 								user.online=true
+								user.currentRoom='Public'
 								db.save(user)
 
 							}).then(function(){
@@ -188,7 +229,7 @@ app.post('/signup', function(req,res) {
 	var name = req.body.username
 	var password = req.body.password
 	var email = req.body.email
-	var obj = {'user':name , 'password':password,'email':email,'online':true}
+	var obj = {'user':name , 'password':password,'email':email,'online':true ,'currentRoom':'Public'}
 
 	db.User.findOne({user:name},function(err,user){
 		if (err){console.log(err)}
@@ -254,17 +295,20 @@ io.on('connection',function(socket){
 socket.on('new_msg',function(data){
 	
 		//we user sockets because we need to send message to all connected sockets.
-
+console.log('socket',data)
 		io.sockets.emit('new_msg',data);
 		var user = data.username
-		var room =  'Public' 
+		var room =  data.room 
 		var message = data.msg
+		//console.log(room)
 		db.Room.findOne({roomname:room},function(err,room1){
 			
 				room1.messages.push({'username':user, 'message':message})
 				db.saveRoom(room1)
 			
 	})
+		curRoom = room;
+		console.log(curRoom)
 })
 //typing listener
 socket.on('typing',function(data){

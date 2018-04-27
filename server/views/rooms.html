@@ -3,16 +3,19 @@
 	<button  ng-click="switch = !switch" class="btn-block btn btn-info"  ><b style="color: black"> Create room </b></button>
 	<div  ng-show="switch" >
 		<input ng-model="name" placeholder="Enter the room name" class="width:100%">
-		  <input type="radio" name="type" value="many"> Many <br>
-		  <input type="radio" name="type" value="private"> Private <br>
-
 		<button ng-click='$ctrl.createroom(name)' class="btn-block btn btn-info">Submit</button>
 	</div>
-	<!-- <button  ng-click="show = !show" class="btn-block btn btn-info"  ><b style="color: black"> Join room </b></button>
+
+<button  ng-click="show = !show" class="btn-block btn btn-info"  ><b style="color: black"> Join room </b></button>
 	<div  ng-show="show" >
-		<input ng-model="roomname" placeholder="Enter the room name" class="width:100%">
-		<button ng-click='$ctrl.joinroom(roomname)' class="btn-block btn btn-info">Submit</button>
-	</div> -->
+		<input ng-model="rname" placeholder="Enter the room name" class="width:100%">
+		<button ng-click='$ctrl.joinroom(rname)' class="btn-block btn btn-info" >Submit</button>
+	</div>
+
+
+
+
+
 <!-- 	<li> <button class="btn-block">Public Room</button></li>
  -->	<div ng-repeat="room in rooms"> 
 		<li> <button class="btn-block">{{room.roomname}}</button></li>

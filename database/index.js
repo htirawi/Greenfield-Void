@@ -1,4 +1,4 @@
-  var mongoose = require('mongoose');
+ var mongoose = require('mongoose');
   mongoose.connect('mongodb://localhost/Users');
   var db = mongoose.connection;
 
@@ -8,7 +8,7 @@
 
   db.once('open', function() {
     console.log('mongoose connected successfully');
-   // saveRoom({'roomname':'Public','type':'Many' })
+    saveRoom({'roomname':'Public' })
   });
 
 
@@ -20,6 +20,7 @@
     messages: [String],
     password: String,
     online: Boolean,
+    currentRoom:String
     
   });
 
@@ -28,8 +29,7 @@
    roomname : { type:String , unique:true},
    members: [String],
    messages : [{username:String, message:String}],
-   type: String,
-  });
+ });
 
   var User = mongoose.model('User', userSchema);
 
@@ -51,7 +51,7 @@
   }
 
 
-module.exports.save = save
-module.exports.saveRoom = saveRoom
-module.exports.User = User
-module.exports.Room = Room
+  module.exports.save = save
+  module.exports.saveRoom = saveRoom
+  module.exports.User = User
+  module.exports.Room = Room

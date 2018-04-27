@@ -1,10 +1,10 @@
 
 <h1 class="text-center "  style="color: white; border-bottom: solid; border-color: cyan ;background-color: #00a3cc"  >Chat</h1>
 <div style="border-style: solid;height: 1050px; border-color: cyan" class="Test" id="chatroom" messages=$scope.messages>
-<div ng-repeat="message in messages"> 
+	<div ng-repeat="message in messages" > 
 	<!-- {{message.username}} <br>
-	{{message.message}} -->
-	<p class='msg'>  <b> {{message.username}}  </b>  :   {{message.message}}  </p>
+		{{message.message}} -->
+		<p class='msg' >  <b> {{message.username}}  </b>  :   {{message.message}}  </p>
 
 
 	</div>
@@ -14,6 +14,6 @@
 </div>
 
 <div>
-	<input type="text" style="width: 100%; height: 50px" id="msg"  ng-keyup="$event.keyCode ==13?$ctrl.send_msg(msg) : null"> 
+	<input type="text" style="width: 100%; height: 50px" id="msg"  ng-keyup="$event.keyCode ==13?$ctrl.send_msg() : null"> 
 	<button class="btn btn-block btn-info" id="send_msg" ng-click="$ctrl.send_msg()">Send</button>
 </div>

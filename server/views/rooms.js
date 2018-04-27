@@ -5,43 +5,50 @@ angular.module('app1')
 			method : "GET",
 			url : "/createroom"
 		}).then(function Success(response) {
-			$scope.rooms = response.data;			
+			$scope.rooms = response.data;
+			console.log(response.data)
+			
 		});
 
 		this.createroom=(name) =>{
-			// if(name === 'Public'){
-			// 	alert("you can't create the Public room")
-			// }
-			// else{
-				$http({
-					method:'POST',
-					url:'/createroom',
-					data:{roomname:name},
-					headers:{'Content-Type':'application/json'}
-				}).then(function onSuccess(response){
-					
+			if(name === 'Public'){
+				alert("you can't create the Public room")
+			}
+			else{
+			$http({
+				method:'POST',
+				url:'/createroom',
+				data:{roomname:name},
+				headers:{'Content-Type':'application/json'}
+			}).then(function onSuccess(response){
+				setTimeout(function(){ 
 					$window.location.reload();
-				}).catch(function(response) {
-					var x = (response.data)
-					alert(x,response.status);
-				})
-			
-			
+				}, 200);
+			}).catch(function(response) {
+				var x = (response.data)
+				alert(x,response.status);
+			})
+			}
 		}
 
-		// this.joinroom=(roomname) =>{
-		// 	$http({
-		// 		method:'POST',
-		// 		url:'/joinroom',
-		// 		data:{roomname:roomname},
-		// 		headers:{'Content-Type':'application/json'}
-		// 	}).catch(function(response) {
-		// 		var x = (response.data)
-		// 		alert(x,response.status);
-		// 	})
+		this.joinroom=(rname) =>{
 			
+			$http({
+				method:'POST',
+				url:'/joinroom',
+				data:{roomname:rname},
+				headers:{'Content-Type':'application/json'}
+			}).then(function(){
+					$('#chatroom').html('')
+					$window.location.reload();
+				}
+				
+			).catch(function(response) {
+				var x = (response.data)
+				alert(x,response.status);
+			})
 			
-		// }
+		}
 
 	},
 
