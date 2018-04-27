@@ -47,7 +47,7 @@ angular.module('app1')
 				
 			{
 				document.getElementById("msg").value = "";
-				chatroom.append("<p class='msg'>" + "<b>" + data.username + "</b>" + ": " + data.msg + " </p>")
+				chatroom.append(" <div style='padding-left: 10px; background-color: white; border:solid;border-color: #cde;  border-radius: 5px;'><p class='msg' style='font-size: 17px; font-family: sans-serif;'>" + "<b>" + data.username + "</b>" + ": " + data.msg + " </p></div> ")
 				data.msg=''
 
 			}
