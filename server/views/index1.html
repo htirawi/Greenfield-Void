@@ -5,29 +5,44 @@
 	li {
 		font-size: 20px ;
 		list-style-type: none;
-
 	}
 
 	.Test
 	{
-		
 		height:100%;
 		overflow:scroll;
 	}
-
 </style>
 <title></title>
 <script src="angular/angular.js"></script>
 <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="main.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 <script src="/socket.io/socket.io.js"></script>
 
 
 </head>
-<body style="background:linear-gradient(to left, #02111d, #037bb5, #02111d);font-family: Comic Sans MS, cursive, sans-serif">
+<body>
+	<nav class="navbar navbar-expand-lg fixed-top ">
+		<a class="navbar-brand" href="#">Home</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		
+		<div class="collapse navbar-collapse " id="navbarSupportedContent">
+			<ul class="navbar-nav mr-4">
+				<li class="nav-item"> 
+					<a class="nav-link" ng-click='$ctrl.logout()'>Logout</a>
+				</li>
+			</ul>
 
-	
-	<h1 class="text-center" style="color: white">ChatBuddy</h1>
+		</div>
+	</nav>
+	<br>
+	<br>
+	<br>
+	<h1 class="text-center" style="margin-bottom:10px ;color: #777">ChatBuddy</h1>
 	<div ng-app="app1">
 		<app1 />
 		

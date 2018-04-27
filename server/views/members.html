@@ -1,11 +1,10 @@
-<div style="height: 550px; border-color: cyan;border-bottom: solid;border-left: solid;border-right: solid; border-color: cyan" users=$scope.users>
-	<h1 class="text-center"  style="color: white ;background-color:#00a3cc " >Members</h1>
-	<button ng-click="$ctrl.showmembers()" class="btn-block btn btn-info" ><b style="color: black"> Online Members </b></button>
+<div style="height: 550px;  background-color:aliceblue; border-color: skyblue; border-style: solid;  border-radius:40px" users=$scope.users>
+	<h1 class="text-center"  style="color: gray;" >Members</h1>
+	<button ng-click="$ctrl.showmembers()" class="btn-block btn btn-info" ><b style="color: white"> Online Members </b></button>
 	<div ng-repeat = "user in users">
-		<li> <button ng-value="user" class="btn-block">{{user.user}}</button></li>
+		<li> <button ng-value="user" class="btn-block" style="border-bottom: solid; border-width: 1px">{{user.user}}</button></li>
 	</div>
 	<br></br>
 	<br></br>
-	
 	</div>
 </div>

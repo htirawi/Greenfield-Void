@@ -1,23 +1,18 @@
-<div style="border-style: solid;height: 700px; border-color: cyan" rooms=$scope.rooms>
-	<h1 class="text-center"  style="color: white ; background-color: #00a3cc" >Rooms</h1>
-	<button  ng-click="switch = !switch" class="btn-block btn btn-info"  ><b style="color: black"> Create room </b></button>
+<div style="border-style: solid;height: 800px; border-color:skyblue; background-color:aliceblue; border-radius: 40px;" rooms=$scope.rooms>
+	<h1 class="text-center"  style="color: gray ;" >Rooms</h1>
+	<button  ng-click="switch = !switch" class="btn-block btn btn-info"  ><b style="color: white"> Create</b></button>
 	<div  ng-show="switch" >
 		<input ng-model="name" placeholder="Enter the room name" class="width:100%">
 		<button ng-click='$ctrl.createroom(name)' class="btn-block btn btn-info">Submit</button>
 	</div>
-
-<button  ng-click="show = !show" class="btn-block btn btn-info"  ><b style="color: black"> Join room </b></button>
+	<br>
+	<button  ng-click="show = !show" class="btn-block btn btn-info"  ><b style="color: white"> Join</b></button>
 	<div  ng-show="show" >
 		<input ng-model="rname" placeholder="Enter the room name" class="width:100%">
 		<button ng-click='$ctrl.joinroom(rname)' class="btn-block btn btn-info" >Submit</button>
 	</div>
 
-
-
-
-
-<!-- 	<li> <button class="btn-block">Public Room</button></li>
- -->	<div ng-repeat="room in rooms"> 
-		<li> <button class="btn-block">{{room.roomname}}</button></li>
+	<div ng-repeat="room in rooms"> 
+	<li> <button  style="border-bottom: solid; border-width: 1px" class="btn-block">{{room.roomname}}</button></li>
 	</div>
 </div>

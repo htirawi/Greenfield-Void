@@ -1,23 +1,29 @@
-<div style="border-style: solid;height: 550px; border-color: cyan" friends="$scope.friends">
-	<h1 class="text-center"  style="color: white ;background-color:#00a3cc " >Friends</h1>
-	<button class="btn-block btn btn-info" ng-click="switch = !switch">add Friend</button>
-	<div  ng-show="switch" >
-		<input ng-model="name" placeholder="Enter friend name" class="width:100%">
+<div style="border-style: solid;height: 550px; border-color:skyblue; background-color:aliceblue; border-radius: 40px;" friends="$scope.friends">
+	<div>
+	<h1 class="text-center"  style="color: gray ;" >Friends</h1>
+	</div>
+
+	<button class="btn-block btn btn-info" ng-click="switch = !switch" >add Friend</button>
+	<div  ng-show="switch" >	
+		<input ng-model="name" placeholder="Enter friend name" class="width:100%" >
 		<button ng-click='$ctrl.addfriend(name)' class="btn-block btn btn-info">add</button>
 	</div>
-	<div>
-		<button  ng-click = "$ctrl.showfriends()" class="btn-block"> Show Friends</button>
-	</div>
-
-	<div ng-repeat="friend in friends">
-		<li> <button  class="btn-block">{{friend}}</button></li>
-	
-	</div>
-
+	<br>
 	<button class="btn-block btn btn-info" ng-click="show = !show">Start a private conversation</button>
+	
 	<div  ng-show="show" >
 		<input ng-model="fname" placeholder="Enter friend name" class="width:100%">
 		<button ng-click='$ctrl.talktofriend(fname)' class="btn-block btn btn-info">start</button>
 	</div>
+	<br>
+	<div
+		<button  ng-click = "$ctrl.showfriends()" class="btn-block btn btn-info"> Show Friends</button>
+	</div>
+
+	<div ng-repeat="friend in friends">
+		<li> <button style="border-bottom: solid; border-width: 1px" class="btn-block">{{friend}}</button></li>
+	
+	</div>
+	
 	
 </div>
