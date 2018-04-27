@@ -5,7 +5,7 @@
   db.on('error', function() {
     console.log('mongoose connection error');
   });
-
+// creating a public room at the start 
   db.once('open', function() {
     console.log('mongoose connected successfully');
     saveRoom({'roomname':'Public' })
@@ -32,20 +32,17 @@
  });
 
   var User = mongoose.model('User', userSchema);
-
   var Room = mongoose.model('Room', roomSchema);
 
 
 
   var saveRoom = function(data) {
-
     var room = new Room(data)
     room.save()
   }
 
 
   var save = function(data) {
-
   	var user = new User(data)
   	user.save()
   }
