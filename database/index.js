@@ -1,6 +1,6 @@
   var mongoose = require('mongoose');
-  var mongoConnect = "mongodb://voidteam:hackerspace@ds161529.mlab.com:61529/chatbuddy" || 'mongodb://localhost/Users'
-
+  var mongoConnect = 'mongodb://localhost/Users'
+// "mongodb://voidteam:hackerspace@ds161529.mlab.com:61529/chatbuddy" || 
   mongoose.connect(mongoConnect);
 
   // mongoose.connect('mongodb://localhost/Users');
