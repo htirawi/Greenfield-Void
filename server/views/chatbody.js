@@ -30,11 +30,9 @@ angular.module('app1')
 			else {
 				console.log(msg)
 				$http({
-
 					method:'GET',
 					url:'/getusername',
 				}).then(function (response){
-					//console.log('r',response.data.currentRoomresponse.data.currentRoom)
 					$scope.currentRoom=response.data.currentRoom
 					socket.emit('new_msg',{msg:msg,username:response.data.user,room:response.data.currentRoom})
 
