@@ -1,7 +1,13 @@
   var mongoose = require('mongoose');
+<<<<<<< HEAD
   // var mongoConnect = "mongodb://voidteam:hackerspace@ds161529.mlab.com:61529/chatbuddy" || 'mongodb://localhost/Users'
 
   // mongoose.connect(mongoConnect);
+=======
+  var mongoConnect = 'mongodb://localhost/Users'
+// "mongodb://voidteam:hackerspace@ds161529.mlab.com:61529/chatbuddy" || 
+  mongoose.connect(mongoConnect);
+>>>>>>> a5afbcbaaf257c572d9f1e62e7bb2277a13f3dbe
 
   mongoose.connect('mongodb://localhost/Users');
   var db = mongoose.connection;
