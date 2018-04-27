@@ -1,0 +1,27 @@
+<html>
+<head>
+  
+  <style>
+  body{
+    background-color: black
+
+  }
+  .remoteVideo {
+    position: absolute;
+    height: 100%;
+    width :100%;
+  }
+  .localVideo {
+    height: 300px;
+    width:310px;
+    position: relative;
+  }
+</style>
+<script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
+</head>
+<body>
+  <video id="remoteVideo" autoplay class="remoteVideo"></video>
+  <video id="localVideo" autoplay muted  class="localVideo"></video> 
+  <script src="video.js"></script> 
+</body>
+</html>
