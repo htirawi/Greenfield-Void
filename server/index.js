@@ -18,6 +18,7 @@ app.set('client',path.join(__dirname,'views'))
 
 app.use(express.static(path.join(__dirname,'/views')))
 app.use(express.static(__dirname + '/../node_modules'));
+app.use( express.static(__dirname + '/../build' ));
 
 app.use(bodyParser())
 app.use(bodyParser.urlencoded({ extended: true }))
