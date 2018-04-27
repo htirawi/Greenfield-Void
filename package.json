@@ -24,7 +24,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "server-dev": "nodemon server/index.js"
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",
