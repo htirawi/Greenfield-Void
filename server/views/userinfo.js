@@ -10,8 +10,19 @@ angular.module('app1')
 				window.location.href = 'index.html'
 			})
 		}
+		this.video=() => {
+            $http({
+                method:'GET',
+                url:'/video'
+                
+            }).then(function onSuccess(response){
+                window.location.href = 'video.html'
+            })
+        }
 		
 	},
+	
+	
 
 
 	templateUrl:'userinfo.html'
