@@ -26,6 +26,7 @@ app.use(bodyParser.json())
 
 var curRoom= 'Public'
 var to ='';
+var privateMsg=[];
 
 
 app.use(session({
@@ -62,32 +63,21 @@ app.get('/messages',function(req, res){
 	//console.log(to,'to')
 	db.Room.findOne({roomname:curRoom}, function(err,data){
 		if(data === null){
-			console.log('user',req.session.user.user)
-			console.log('to',to)
-			console.log('cur',curRoom)
-			db.User.findOne({user:req.session.user.user},function(err,user){
-				console.log(user.private)
-				for(var i=0;i<user.private.length;i++){
-					if(to === user.private[i].to){
-						for(var j=0;j<user.private[i].message.length;j++){
-							//console.log(user.private)
-							//console.log(user.private.message)
-							result.push({user:req.session.user.user,msg:user.private[i].message[j]})
-								//console.log(result)
-						}
-					}	
-				}	
-			})
-
-		}else{
+			
+			console.log(privateMsg)
+			res.send(privateMsg)
+		}
+	
+		else{
 			for(var i=0;i<data.messages.length;i++){
 				result.push({user:req.session.user.user,msg:data.messages[i].message})
 			}
+			res.send(result)
 
 		}
 		
-		console.log(result)
-		res.send(result)
+		//console.log(result)
+		
 	})
 
 })
@@ -338,14 +328,18 @@ socket.on('new_msg',function(data){
 				for(var i=0;i<user1.private.length;i++){
 					if(user1.private[i].to === room){
 						user1.private[i].message.push(message)
+						privateMsg.push({user:user1.user,msg:message})
+
 					}
 				}
-				db.save(user1)
+				db.save(user1    )
 
 				db.User.findOne({user:to},function(err,user2){
 					for(var i=0;i<user2.private.length;i++){
 						if(user2.private[i].to === data.username ){
 							user2.private[i].message.push(message)
+						privateMsg.push({user:user2.user,msg:message})
+
 						}
 					}
 				db.save(user2)
@@ -356,10 +350,11 @@ socket.on('new_msg',function(data){
 			}
 			else{
 				db.Room.findOne({roomname:room},function(err,room1){
+					if(room1 !== null){
 
 					room1.messages.push({'username':user, 'message':message})
 					db.saveRoom(room1)
-
+}
 				})
 			}
 		})

@@ -48,7 +48,7 @@ angular.module('app')
 				data:{roomname:fname},
 				headers:{'Content-Type':'application/json'}
 			}).then(function(){
-				$('#chatroom').html('')
+				//$('#chatroom').html('')
 				$window.location.reload();
 				console.log('fname')
 
