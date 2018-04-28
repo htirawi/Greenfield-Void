@@ -24,6 +24,11 @@ angular.module('app')
 		}
 
 		{this.signup=(name,pass,email) =>{
+			if ( pass.length < 8  ) { 
+				alert ( 'password too short')
+			}
+
+
 			$http({
 				method:'POST',
 				url:'/signup',
