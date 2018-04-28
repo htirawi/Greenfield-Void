@@ -117,7 +117,7 @@ app.post('/joinroom', function(req,res) {
 			res.status(404).send('room is not found')
 		}
 			else {
-				
+
 				if (password === room.password){
 
 					var x = req.session.user.user
@@ -375,7 +375,7 @@ socket.on('new_msg',function(data){
 				})
 			}
 		})
-		curRoom = room;
+		curRoom = 'Public';
 	})
 //typing listener , not in use 
 socket.on('typing',function(data){
