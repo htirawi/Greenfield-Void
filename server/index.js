@@ -57,20 +57,27 @@ app.get('/index1',function (req, res) {
 
 })
 ;
+
+app.delete('/deleteacc',function (req, res) {
+db.User.remove({ user:req.session.user.user  }, function (err) {});
+	
+})
+
 //Finding messages for a spesfic room
 app.get('/messages',function(req, res){
 	var result=[]
-	//console.log(to,'to')
 	db.Room.findOne({roomname:curRoom}, function(err,data){
 		if(data === null){
+
 			
 			console.log(privateMsg)
 			res.send(privateMsg)
 		}
 	
 		else{
+
 			for(var i=0;i<data.messages.length;i++){
-				result.push({user:req.session.user.user,msg:data.messages[i].message})
+				result.push({user:data.messages[i].username,msg:data.messages[i].message})
 			}
 			res.send(result)
 
@@ -85,7 +92,8 @@ app.get('/messages',function(req, res){
 //Creating a room 
 app.post('/createroom', function(req,res) {
 	var name = req.body.roomname
-	db.saveRoom({'roomname':name})
+	var password = req.body.password
+	db.saveRoom({'roomname':name , 'password':password})
 	res.send("done")
 });
 
@@ -100,24 +108,35 @@ app.get('/createroom', function(req,res) {
 //Joining room , checking if it exist or not then saving if it doesnt exist before
 app.post('/joinroom', function(req,res) {
 	var name = req.body.roomname
+	var password = req.body.password
 	db.Room.findOne({roomname:name},function(err,room){
 		if ( room === null  ) {
-			res.status(404).send('room is not found')}
+			res.status(404).send('room is not found')
+		}
 			else {
-				var x = req.session.user.user
-				if(room.members.indexOf(x) === -1){
-					room.members.push(x)
-					db.saveRoom(room)
+
+				if (password === room.password){
+
+					var x = req.session.user.user
+					if(room.members.indexOf(x) === -1){
+						room.members.push(x)
+						db.saveRoom(room)
+						db.User.findOne({user:req.session.user.user},function(err,user){
+							user.currentRoom=req.body.roomname
+							db.save(user)
+							curRoom=name
+							
+						})
+					}
+
 				}
 			}
+			res.status(404).send('room is not found')
 
 		})
 
-	db.User.findOne({user:req.session.user.user},function(err,user){
-		user.currentRoom=req.body.roomname
-		db.save(user)
-	})
-	curRoom=name
+	
+	
 })
 
 app.post('/talktofriend', function(req,res) {
@@ -358,7 +377,7 @@ socket.on('new_msg',function(data){
 				})
 			}
 		})
-		curRoom = room;
+		curRoom = 'Public';
 	})
 //typing listener , not in use 
 socket.on('typing',function(data){

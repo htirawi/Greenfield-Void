@@ -10,7 +10,7 @@ angular.module('app1')
 			
 		});
 
-		this.createroom=(name) =>{
+		this.createroom=(name,password) =>{
 			if(name === 'Public'){
 				alert("you can't create the Public room")
 			}
@@ -18,7 +18,7 @@ angular.module('app1')
 			$http({
 				method:'POST',
 				url:'/createroom',
-				data:{roomname:name},
+				data:{roomname:name , password:password},
 				headers:{'Content-Type':'application/json'}
 			}).then(function onSuccess(response){
 				setTimeout(function(){ 
@@ -31,12 +31,12 @@ angular.module('app1')
 			}
 		}
 
-		this.joinroom=(rname) =>{
+		this.joinroom=(rname,rpass) =>{
 			
 			$http({
 				method:'POST',
 				url:'/joinroom',
-				data:{roomname:rname},
+				data:{roomname:rname,password:rpass},
 				headers:{'Content-Type':'application/json'}
 			}).then(function(){
 					$('#chatroom').html('')

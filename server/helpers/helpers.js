@@ -42,7 +42,6 @@ exports.hash = function(obj){
 
 
 
-
   // exports.retrieve = function(req,res){
   //   db.User.find({},function(err,data){
   //     res.send(data)

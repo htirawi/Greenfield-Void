@@ -1,6 +1,6 @@
 angular.module('app')
 .component('signing', {
-	controller : function($http){
+	controller : function($http,$window){
 		{this.signin=(username,password) =>{
 			if ( username === undefined || password === undefined) {
 
@@ -24,14 +24,19 @@ angular.module('app')
 		}
 
 		{this.signup=(name,pass,email) =>{
+			if ( pass.length < 8  ) { 
+				alert ( 'password too short')
+			}
+
+
 			$http({
 				method:'POST',
 				url:'/signup',
 				data:{username:name,password:pass,email:email},
 				headers:{'Content-Type':'application/json'}
 			}).then(function onSuccess(response){
-				var x = (response.data)
-				alert(x,response.status);
+				
+				$window.location.reload()
 			}).catch(function(response) {
 				var x = (response.data)
 				alert(x,response.status);
