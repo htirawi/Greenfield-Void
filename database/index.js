@@ -33,6 +33,7 @@ var roomSchema = mongoose.Schema({
  roomname : { type:String , unique:true},
  members: [String],
  messages : [{username:String, message:String}],
+ password: String
 });
 
 var User = mongoose.model('User', userSchema);

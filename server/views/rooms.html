@@ -3,13 +3,15 @@
 	<button  ng-click="switch = !switch" class="btn-block btn btn-info"  ><b style="color: white"> Create</b></button>
 	<div  ng-show="switch" >
 		<input ng-model="name" placeholder="Enter the room name" class="width:100%">
-		<button ng-click='$ctrl.createroom(name)' class="btn-block btn btn-info">Submit</button>
+		<input type="password" ng-model = "password" placeholder="Enter a password" class="width:100%" >
+		<button ng-click='$ctrl.createroom(name,password)' class="btn-block btn btn-info">Submit</button>
 	</div>
 	<br>
 	<button  ng-click="show = !show" class="btn-block btn btn-info"  ><b style="color: white"> Join</b></button>
 	<div  ng-show="show" >
 		<input ng-model="rname" placeholder="Enter the room name" class="width:100%">
-		<button ng-click='$ctrl.joinroom(rname)' class="btn-block btn btn-info" >Submit</button>
+		<input ng-model="rpass" placeholder="Enter the room password,rpass" class="width:100%">
+		<button ng-click='$ctrl.joinroom(rname,rpass)' class="btn-block btn btn-info" >Submit</button>
 	</div>
 
 	<div ng-repeat="room in rooms"> 
