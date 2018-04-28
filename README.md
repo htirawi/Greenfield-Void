@@ -39,5 +39,22 @@ things you can do :
 * [Angular](https://angular.io/)
 * [Express](https://expressjs.com/)
 
+
 ## Installing
+
+
+## Download
+
+You can manually download the latest release [here](https://github.com/RBK4-Void/Greenfield-Void.git).
+
+## Development
+
+It's really easy to develop this app, no build tools like Webpack needed here, to get more:
+
+```bash
+npm install
+
+npm run server/index.js
+# edit files, save, refresh and it's done.
+```
 
