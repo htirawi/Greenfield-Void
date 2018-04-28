@@ -37,6 +37,7 @@ angular.module('app')
 				var x = (response.data)
 				alert(x,response.status);
 			})
+			$window.location.reload();
 			
 		}
 
