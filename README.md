@@ -61,10 +61,10 @@ npm run server/index.js
 
 ## Authors
 
-* **Alaa** - [Alaaaa](https://github.com/alaamigdady)
-* **Ameira** - [Bees](https://github.com/AmeiraHassoun)
-* **Besslan** - [Bees](https://github.com/Besslan)
-* **Hussein** - [Huss](https://github.com/htirawi)
+* **Alaa** - [Alaaaa](https://github.com/alaamigdady) :neutral_face:
+* **Ameira** - [Bees](https://github.com/AmeiraHassoun) :hatching_chick:
+* **Besslan** - [Bees](https://github.com/Besslan) :neckbeard:
+* **Hussein** - [Huss](https://github.com/htirawi) :sunglasses:
 
 
 ## License
