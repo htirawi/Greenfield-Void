@@ -25,6 +25,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 var curRoom= 'Public'
+var to ='';
+
 
 app.use(session({
 	secret: 'shhh, it\'s aa secret',
@@ -56,8 +58,36 @@ app.get('/index1',function (req, res) {
 ;
 //Finding messages for a spesfic room
 app.get('/messages',function(req, res){
+	var result=[]
+	//console.log(to,'to')
 	db.Room.findOne({roomname:curRoom}, function(err,data){
-		res.send(data)
+		if(data === null){
+			console.log('user',req.session.user.user)
+			console.log('to',to)
+			console.log('cur',curRoom)
+			db.User.findOne({user:req.session.user.user},function(err,user){
+				console.log(user.private)
+				for(var i=0;i<user.private.length;i++){
+					if(to === user.private[i].to){
+						for(var j=0;j<user.private[i].message.length;j++){
+							//console.log(user.private)
+							//console.log(user.private.message)
+							result.push({user:req.session.user.user,msg:user.private[i].message[j]})
+								//console.log(result)
+						}
+					}	
+				}	
+			})
+
+		}else{
+			for(var i=0;i<data.messages.length;i++){
+				result.push({user:req.session.user.user,msg:data.messages[i].message})
+			}
+
+		}
+		
+		console.log(result)
+		res.send(result)
 	})
 
 })
@@ -100,6 +130,45 @@ app.post('/joinroom', function(req,res) {
 	curRoom=name
 })
 
+app.post('/talktofriend', function(req,res) {
+	var name = req.body.roomname;
+	to = name;
+	//console.log("to join",to)
+
+
+	
+	db.User.findOne({user:req.session.user.user},function(err,user){
+		//console.log(req.session.user.user)
+		if(user.friends.indexOf(name) !== -1){
+			user.currentRoom=req.body.roomname
+			user.private.push({to:name,message:[]})
+			db.save(user)
+		}
+		// else{
+		// 	res.status(404).send('you are not friends')
+		// }
+
+		
+		
+	})
+	db.User.findOne({user:name},function(err,user){
+		console.log(req.session.user.user)
+		if(user.friends.indexOf(req.session.user.user) !== -1){
+			user.currentRoom=name
+			user.private.push({to:req.session.user.user,message:[]})
+			db.save(user)
+		}
+		// else{
+		// 	res.status(404).send('you are not friends')
+		// }
+
+		
+		
+	})
+	curRoom=name
+	console.log(curRoom)
+	
+})
 
 
 
@@ -151,7 +220,15 @@ app.post('/addfriend', function(req,res) {
 					user1.friends.push(name)
 					db.save(user1)
 				}
-			})}
+			})
+			db.User.findOne({user:name},function(err,user2){
+				if(user2.friends.indexOf(x) === -1){
+					user2.friends.push(x)
+					db.save(user2)
+				}
+			})
+
+		}
 
 		})
 	
@@ -251,16 +328,40 @@ io.on('connection',function(socket){
 socket.on('new_msg',function(data){
 	
 		//we user sockets because we need to send message to all connected sockets.
-		console.log('socket',data)
+	//	console.log('socket',data)
 		io.sockets.emit('new_msg',data);
 		var user = data.username
 		var room =  data.room 
 		var message = data.msg
-		db.Room.findOne({roomname:room},function(err,room1){
-			
-			room1.messages.push({'username':user, 'message':message})
-			db.saveRoom(room1)
-			
+		db.User.findOne({user:user},function(err,user1){
+			if(user1.friends.indexOf(room)!== -1){
+				for(var i=0;i<user1.private.length;i++){
+					if(user1.private[i].to === room){
+						user1.private[i].message.push(message)
+					}
+				}
+				db.save(user1)
+
+				db.User.findOne({user:to},function(err,user2){
+					for(var i=0;i<user2.private.length;i++){
+						if(user2.private[i].to === data.username ){
+							user2.private[i].message.push(message)
+						}
+					}
+				db.save(user2)
+
+				})
+
+
+			}
+			else{
+				db.Room.findOne({roomname:room},function(err,room1){
+
+					room1.messages.push({'username':user, 'message':message})
+					db.saveRoom(room1)
+
+				})
+			}
 		})
 		curRoom = room;
 	})
@@ -269,4 +370,3 @@ socket.on('typing',function(data){
 	socket.broadcast.emit('typing', {username:socket.username})
 })
 });
-

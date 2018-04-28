@@ -1,11 +1,11 @@
-<div style="border-style: solid; border-radius: 20px; background-color: aliceblue ; border-color:skyblue">
+<div style="border-style: solid; border-top-right-radius: 20px;border-top-left-radius: 20px; background-color: aliceblue ; border-color:skyblue">
 <h1 class="text-center "  style="color: gray" >Chat</h1>
 </div>
 
 <div style="border-style: solid; height: 1050px; border-color: skyblue;" class="Test" id="chatroom" messages=$scope.messages>
 	<div ng-repeat="message in messages" > 
 		<div style="padding-left: 10px; background-color: white; border:solid;border-color: #cde;  border-radius: 5px;">
-		<p class='msg' style="font-size: 17px; font-family: sans-serif;">  <b> {{message.username}}  </b>  :   {{message.message}}  </p>
+		<p class='msg' style="font-size: 17px; font-family: sans-serif;">  <b> {{message.user}}  </b>  :   {{message.msg}}  </p>
 		</div>
 	</div>
 </div>

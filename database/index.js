@@ -1,7 +1,7 @@
-  var mongoose = require('mongoose');
+var mongoose = require('mongoose');
 
-  // mongoose.connect('mongodb://localhost/Users');
-mongoose.connect('mongodb://voidteam:hackerspace@ds161529.mlab.com:61529/chatbuddy');
+   mongoose.connect('mongodb://localhost/Users');
+//mongoose.connect('mongodb://voidteam:hackerspace@ds161529.mlab.com:61529/chatbuddy');
   var db = mongoose.connection;
 
   db.on('error', function() {
@@ -22,7 +22,9 @@ mongoose.connect('mongodb://voidteam:hackerspace@ds161529.mlab.com:61529/chatbud
     messages: [String],
     password: String,
     online: Boolean,
-    currentRoom:String
+    currentRoom:String,
+    private: [{to : String , message: [String]}],
+
     
   });
 
@@ -45,8 +47,8 @@ mongoose.connect('mongodb://voidteam:hackerspace@ds161529.mlab.com:61529/chatbud
 
 
   var save = function(data) {
-  	var user = new User(data)
-  	user.save()
+    var user = new User(data)
+    user.save()
   }
 
 

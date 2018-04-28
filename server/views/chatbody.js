@@ -11,8 +11,8 @@ angular.module('app1')
 
 
 			
-			$scope.messages = response.data.messages;
-			console.log(response.data.messages)
+			$scope.messages = response.data;
+			console.log(response.data)
 			
 			
 		});

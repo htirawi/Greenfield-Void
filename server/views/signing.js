@@ -41,4 +41,3 @@ angular.module('app')
 	},
 	templateUrl:'signing.html'
 })
-
