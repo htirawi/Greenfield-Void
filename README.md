@@ -58,3 +58,22 @@ npm run server/index.js
 # edit files, save, refresh and it's done.
 ```
 
+
+## Authors
+
+* **Alaa** - [Alaaaa](https://github.com/alaamigdady)
+* **Ameira** - [Bees](https://github.com/AmeiraHassoun)
+* **Besslan** - [Bees](https://github.com/Besslan)
+* **Hussein** - [Huss](https://github.com/htirawi)
+
+
+## License
+
+This project is licensed under the RBK License - see the [RBK](https://rbk.org/) for details
+
+## Acknowledgments
+
+* Hat tip to anyone who's code was used
+* Inspiration
+* etc
+
