@@ -40,6 +40,23 @@ angular.module('app')
 			
 		}
 
+		this.talktofriend = (fname) =>{
+			$http({
+				method:'POST',
+				url:'/talktofriend',
+				data:{roomname:fname},
+				headers:{'Content-Type':'application/json'}
+			}).then(function(){
+				$('#chatroom').html('')
+				$window.location.reload();
+				console.log('fname')
+
+			}
+
+			)
+			$window.location.reload();
+		}
+
 
 
 	},

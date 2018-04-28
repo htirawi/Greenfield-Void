@@ -18,12 +18,15 @@ app.set('client',path.join(__dirname,'views'))
 
 app.use(express.static(path.join(__dirname,'/views')))
 app.use(express.static(__dirname + '/../node_modules'));
+app.use( express.static(__dirname + '/../build' ));
 
 app.use(bodyParser())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 var curRoom= 'Public'
+var to ='';
+
 
 app.use(session({
 	secret: 'shhh, it\'s aa secret',
@@ -53,24 +56,50 @@ app.get('/index1',function (req, res) {
 
 })
 ;
-
+//Finding messages for a spesfic room
 app.get('/messages',function(req, res){
-	//var user = req.session.user.user
-	console.log(curRoom)
-db.Room.findOne({roomname:curRoom}, function(err,data){
-	res.send(data)
-		})
+	var result=[]
+	//console.log(to,'to')
+	db.Room.findOne({roomname:curRoom}, function(err,data){
+		if(data === null){
+			console.log('user',req.session.user.user)
+			console.log('to',to)
+			console.log('cur',curRoom)
+			db.User.findOne({user:req.session.user.user},function(err,user){
+				console.log(user.private)
+				for(var i=0;i<user.private.length;i++){
+					if(to === user.private[i].to){
+						for(var j=0;j<user.private[i].message.length;j++){
+							//console.log(user.private)
+							//console.log(user.private.message)
+							result.push({user:req.session.user.user,msg:user.private[i].message[j]})
+								//console.log(result)
+						}
+					}	
+				}	
+			})
+
+		}else{
+			for(var i=0;i<data.messages.length;i++){
+				result.push({user:req.session.user.user,msg:data.messages[i].message})
+			}
+
+		}
+		
+		console.log(result)
+		res.send(result)
+	})
 
 })
 
-
+//Creating a room 
 app.post('/createroom', function(req,res) {
 	var name = req.body.roomname
-	console.log(name)
 	db.saveRoom({'roomname':name})
 	res.send("done")
 });
 
+//Getting created rooms
 app.get('/createroom', function(req,res) {
 	db.Room.find({},function(err, data){
 		res.send(data)
@@ -78,38 +107,73 @@ app.get('/createroom', function(req,res) {
 	
 });
 
+//Joining room , checking if it exist or not then saving if it doesnt exist before
 app.post('/joinroom', function(req,res) {
-
 	var name = req.body.roomname
-	console.log(name)
-	
 	db.Room.findOne({roomname:name},function(err,room){
 		if ( room === null  ) {
 			res.status(404).send('room is not found')}
-		else {
-		var x = req.session.user.user
-			if(room.members.indexOf(x) === -1){
-				room.members.push(x)
-				db.saveRoom(room)
+			else {
+				var x = req.session.user.user
+				if(room.members.indexOf(x) === -1){
+					room.members.push(x)
+					db.saveRoom(room)
+				}
 			}
-		}
 
-	})
+		})
 
 	db.User.findOne({user:req.session.user.user},function(err,user){
-			user.currentRoom=req.body.roomname
-			db.save(user)
-		})
-curRoom=name
-// req.session.user.currentRoom=name
-
+		user.currentRoom=req.body.roomname
+		db.save(user)
+	})
+	curRoom=name
 })
+
+app.post('/talktofriend', function(req,res) {
+	var name = req.body.roomname;
+	to = name;
+	//console.log("to join",to)
+
+
 	
+	db.User.findOne({user:req.session.user.user},function(err,user){
+		//console.log(req.session.user.user)
+		if(user.friends.indexOf(name) !== -1){
+			user.currentRoom=req.body.roomname
+			user.private.push({to:name,message:[]})
+			db.save(user)
+		}
+		// else{
+		// 	res.status(404).send('you are not friends')
+		// }
+
 		
+		
+	})
+	db.User.findOne({user:name},function(err,user){
+		console.log(req.session.user.user)
+		if(user.friends.indexOf(req.session.user.user) !== -1){
+			user.currentRoom=name
+			user.private.push({to:req.session.user.user,message:[]})
+			db.save(user)
+		}
+		// else{
+		// 	res.status(404).send('you are not friends')
+		// }
+
+		
+		
+	})
+	curRoom=name
+	console.log(curRoom)
 	
+})
 
 
 
+
+//Showing members who joined the room 
 app.get('/showmembers', function(req,res) {
 	db.User.find({},function(err, data){
 		var arr = []
@@ -123,31 +187,25 @@ app.get('/showmembers', function(req,res) {
 	
 });
 
+//Showing friends that you added 
 app.get('/showfriends', function(req,res) {
 	var x = req.session.user.user
 	db.User.findOne({user:x},function(err,user){
 		res.send(user.friends)
-		// console.log(user.friends)
 	})
 });
 
+
 app.get('/getusername', function(req,res) {
-	//console.log(session)
 	var x = req.session.user.user
-	//var y = req.session.room
-	//console.log(y)
 	db.User.findOne({user:x},function(err,user){
-		console.log(user)
-		//var data = {user:user,room:currentRoom}
-		//console.log(data)
 		res.send(user)
 		
 	})
 });
 
-
-app.post('/addfriend', function(req,res) {
-	
+//adding friends to a spesfic user, checking if it exist or not 
+app.post('/addfriend', function(req,res) {	
 	var name = req.body.name
 	db.User.findOne({user:name},function(err,user){
 		if ( user === null  ) {
@@ -156,41 +214,29 @@ app.post('/addfriend', function(req,res) {
 			res.status(404).send("you can't add your self")
 
 		}else {
-		var x = req.session.user.user
-		db.User.findOne({user:x},function(err,user1){
-			if(user1.friends.indexOf(name) === -1){
-				user1.friends.push(name)
-				db.save(user1)
-			}
-		})}
+			var x = req.session.user.user
+			db.User.findOne({user:x},function(err,user1){
+				if(user1.friends.indexOf(name) === -1){
+					user1.friends.push(name)
+					db.save(user1)
+				}
+			})
+			db.User.findOne({user:name},function(err,user2){
+				if(user2.friends.indexOf(x) === -1){
+					user2.friends.push(x)
+					db.save(user2)
+				}
+			})
 
-	})
+		}
+
+		})
 	
 });
 
-// app.post('/joinroom', function(req,res) {
-	
-// 	var name = req.body.roomname
-// 	console.log(name)
-// 	db.Room.findOne({roomname:name},function(err,room){
-// 		if ( room === null  ) {
-// 			res.status(404).send('room is not found')
-// 		}else if(room.members.indexOf(req.session.user.user)!== -1){
-// 			res.status(404).send("you already joining this room")
 
-// 		}else {
-// 		var x = req.session.user.user
-// 		room.members.push(x)
-// 		db.saveRoom(room)
-// 			}
-// 		})})
-
-	
-	
-
-
+//Signing in , checking if username and password match and creating a session
 app.post('/signin', function(req,res) {
-	
 	var username = req.body.username;
 	var password = req.body.password;
 
@@ -208,13 +254,12 @@ app.post('/signin', function(req,res) {
 							}).then(function(){
 								helper.createSession(req,res,user)
 
-							// 	db.Room.findOne({roomname:'Public'},function(err,room){
-							// 	if(room.members.indexOf(username) === -1){	
-							// 	room.members.push(username)
-							// 	db.saveRoom(room)}
+								db.Room.findOne({roomname:'Public'},function(err,room){
+									if(room.members.indexOf(username) === -1){	
+										room.members.push(username)
+										db.saveRoom(room)}
 
-							// })
-						})
+									})})
 						} else{
 							console.log(match)
 							res.status(404).send('wrong password')
@@ -225,6 +270,7 @@ app.post('/signin', function(req,res) {
 });
 
 
+//Saving a new user if it didnt exsist before 
 app.post('/signup', function(req,res) {
 	var name = req.body.username
 	var password = req.body.password
@@ -247,7 +293,7 @@ app.post('/signup', function(req,res) {
 
 });
 
-
+//Logging out , destroying the session
 app.get('/logout', function(req, res) {
 	var x = req.session.user.user
 	db.User.findOne({user:x},function(err,user){
@@ -264,58 +310,63 @@ app.get('/logout', function(req, res) {
 })
 
 
-
-//for deployment
-
 var port = process.env.PORT || 3000;
 
 const server = app
 .use((req, res) => res.render('index') )
 .listen(port, () => console.log(`Listening on ${ port }`));
 
-//Listen on port 3000
-// server = app.listen(3000)
 
 
 var io = socketIO(server)
 
 //listen to connection
 io.on('connection',function(socket){
-	// var x = req.session.user.user
-
-	// console.log(socket.username)
-
-
-	//get default user name
-	socket.username = "Someone...";
-
-//listen to change username
+	
 
 //listen to new msg
 socket.on('new_msg',function(data){
 	
 		//we user sockets because we need to send message to all connected sockets.
-console.log('socket',data)
+	//	console.log('socket',data)
 		io.sockets.emit('new_msg',data);
 		var user = data.username
 		var room =  data.room 
 		var message = data.msg
-		//console.log(room)
-		db.Room.findOne({roomname:room},function(err,room1){
-			
-				room1.messages.push({'username':user, 'message':message})
-				db.saveRoom(room1)
-			
-	})
+		db.User.findOne({user:user},function(err,user1){
+			if(user1.friends.indexOf(room)!== -1){
+				for(var i=0;i<user1.private.length;i++){
+					if(user1.private[i].to === room){
+						user1.private[i].message.push(message)
+					}
+				}
+				db.save(user1)
+
+				db.User.findOne({user:to},function(err,user2){
+					for(var i=0;i<user2.private.length;i++){
+						if(user2.private[i].to === data.username ){
+							user2.private[i].message.push(message)
+						}
+					}
+				db.save(user2)
+
+				})
+
+
+			}
+			else{
+				db.Room.findOne({roomname:room},function(err,room1){
+
+					room1.messages.push({'username':user, 'message':message})
+					db.saveRoom(room1)
+
+				})
+			}
+		})
 		curRoom = room;
-		console.log(curRoom)
-})
-//typing listener
+	})
+//typing listener , not in use 
 socket.on('typing',function(data){
 	socket.broadcast.emit('typing', {username:socket.username})
 })
 });
-
-// app.listen(3000, function() {
-// 	console.log('listening on port 3000!');
-// });

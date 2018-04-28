@@ -11,8 +11,8 @@ angular.module('app1')
 
 
 			
-			$scope.messages = response.data.messages;
-			console.log(response.data.messages)
+			$scope.messages = response.data;
+			console.log(response.data)
 			
 			
 		});
@@ -30,11 +30,9 @@ angular.module('app1')
 			else {
 				console.log(msg)
 				$http({
-
 					method:'GET',
 					url:'/getusername',
 				}).then(function (response){
-					//console.log('r',response.data.currentRoomresponse.data.currentRoom)
 					$scope.currentRoom=response.data.currentRoom
 					socket.emit('new_msg',{msg:msg,username:response.data.user,room:response.data.currentRoom})
 
@@ -49,7 +47,7 @@ angular.module('app1')
 				
 			{
 				document.getElementById("msg").value = "";
-				chatroom.append("<p class='msg'>" + "<b>" + data.username + "</b>" + ": " + data.msg + " </p>")
+				chatroom.append(" <div style='padding-left: 10px; background-color: white; border:solid;border-color: #cde;  border-radius: 5px;'><p class='msg' style='font-size: 17px; font-family: sans-serif;'>" + "<b>" + data.username + "</b>" + ": " + data.msg + " </p></div> ")
 				data.msg=''
 
 			}

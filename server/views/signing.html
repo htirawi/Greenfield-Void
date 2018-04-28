@@ -1,44 +1,142 @@
 <html>
 <head>
 	<style >
-		button {
-				width: 100px;
+	button {
+		width: 100px;
 
-			},
+		},
 		input {
-				width: 100%;
+			width: 100%;
 		}	
 	</style>
 	<title>Sign-in</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
 
-<body class="text-center" >
-	<div >
-		<div  ng-hide="show" >
-			<br><br>
-			<h5>Username: </h5>
-			<input ng-model="username" placeholder="Enter your username">
-			<br><br>
-			<h5>Password: </h5>
-			<input ng-model="password" placeholder="Enter your password" type="password">
-			<br><br>
-			<button ng-click='$ctrl.signin(username,password)' class="btn btn-default">Sign in</button>
-			 <button ng-click="show = !show" class="btn btn-default">Sign Up</button>
+<body>
+	<nav class="navbar navbar-expand-lg fixed-top ">
+		<a class="navbar-brand" href="#">Home</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		
+		<div class="collapse navbar-collapse " id="navbarSupportedContent">
+			<ul class="navbar-nav mr-4">
+				<li class="nav-item">
+					<a class="nav-link" ng-click="show = !show">SignUp</a>
+				</li>
+				
+				<li class="nav-item">
+					<a class="nav-link" ng-click="show = !show" >SignIn</a>
+				</li>
+				
+			</ul>
+
 		</div>
-		<div ng-show="show" > 
-			<br><br>
+	</nav>
 
-			<input ng-model="name" placeholder="Enter your username"><br></br>
-			<input ng-model="pass" placeholder="Enter your password" type="password"><br></br>
-			<input ng-model="email" placeholder="Enter your email"><br></br>
+	<div class="limiter">
+		<div ng-hide="show" class="container-login100" style=" border: 2px solid white;
+		border-radius: 25px;">
+		<div  class="wrap-login100" >
+			<form class="login100-form validate-form p-l-55 p-r-55 p-t-178">
+				<span class="login100-form-title">
+					Sign In
+				</span>
+				<br></br>
+				<br></br>
+				<br></br>
+				<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
+					<input ng-model="username" class="input100" type="text" name="username" placeholder="Username">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="wrap-input100 validate-input" data-validate = "Please enter password">
+					<input ng-model="password" class="input100" type="password" name="pass" placeholder="Password">
+					<span class="focus-input100"></span>
+				</div>
+				<br></br>
 
 
-			<button ng-click='$ctrl.signup(name,pass,email)' class="btn btn-default">Register</button><br></br>
-			<button ng-click="show=!show" class="btn btn-default">Sign in</button>
+				<div class="container-login100-form-btn">
+					<button ng-click='$ctrl.signin(username,password)' class="login100-form-btn">
+						Sign in
+					</button>
+				</div>
+				<br></br>
+				<br></br>
+				<div class="flex-col-c p-t-170 p-b-40">
+					<span class="txt1 p-b-9">
+						Don’t have an account?
+					</span>
+					<br></br>
+					<button ng-click="show = !show" class="txt3">
+						Sign up now
+					</button>
+				</div>
+			</form>
 		</div>
 	</div>
+
+
+
+	<div  ng-show="show" class="container-login100" style=" border: 2px solid white;
+	border-radius: 25px;">
+	<div  class="wrap-login100" >
+		<form class="login100-form validate-form p-l-55 p-r-55 p-t-178">
+			<span class="login100-form-title">
+				Sign Up
+			</span>
+			<br></br>
+			<br></br>
+			<br></br>
+			<div  class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
+				<input ng-model="user" class="input100" type="text" name="username" placeholder="Enter Username">
+				<span class="focus-input100"></span>
+			</div>
+
+			<div class="wrap-input100 validate-input" data-validate = "Please enter password">
+				<input ng-model="pass" class="input100" type="password" name="pass" placeholder=" Enter Password">
+				<span class="focus-input100"></span>
+			</div>
+
+
+			<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter email">
+				<input ng-model="email" class="input100" type="text" name="email" placeholder="Enter email">
+				<span class="focus-input100"></span>
+			</div>
+
+			<br></br>
+
+
+			<div  class="container-login100-form-btn">
+				<button ng-click='$ctrl.signup(user,pass,email)' class="login100-form-btn">
+					Register
+				</button>
+			</div>
+
+			<br></br>
+			
+
+			<div class="flex-col-c p-t-170 p-b-40">
+
+				<br></br>
+				<button ng-click="show=!show" class="txt3">
+					Sign in
+				</button>
+			</div>
+
+		</form>
+	</div>
+</div>
+
+
+</div>
+
+
 </body>
 
 </html>
