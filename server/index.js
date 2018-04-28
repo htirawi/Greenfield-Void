@@ -56,24 +56,24 @@ app.get('/index1',function (req, res) {
 
 })
 ;
+
+app.delete('/deleteacc',function (req, res) {
+db.User.remove({ user:req.session.user.user  }, function (err) {});
+	
+})
+
 //Finding messages for a spesfic room
 app.get('/messages',function(req, res){
 	var result=[]
-	//console.log(to,'to')
 	db.Room.findOne({roomname:curRoom}, function(err,data){
 		if(data === null){
-			console.log('user',req.session.user.user)
-			console.log('to',to)
-			console.log('cur',curRoom)
+			console.log(data)
 			db.User.findOne({user:req.session.user.user},function(err,user){
 				console.log(user.private)
 				for(var i=0;i<user.private.length;i++){
 					if(to === user.private[i].to){
 						for(var j=0;j<user.private[i].message.length;j++){
-							//console.log(user.private)
-							//console.log(user.private.message)
 							result.push({user:req.session.user.user,msg:user.private[i].message[j]})
-								//console.log(result)
 						}
 					}	
 				}	
@@ -81,7 +81,7 @@ app.get('/messages',function(req, res){
 
 		}else{
 			for(var i=0;i<data.messages.length;i++){
-				result.push({user:req.session.user.user,msg:data.messages[i].message})
+				result.push({user:data.messages[i].username,msg:data.messages[i].message})
 			}
 
 		}
