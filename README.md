@@ -46,7 +46,7 @@ things you can do :
 ## Download
 
 You can manually download the latest release [here](https://github.com/RBK4-Void/Greenfield-Void.git).
-ffdfd
+
 ## Development
 
 It's really easy to develop this app, no build tools like Webpack needed here, to get more:
